@@ -34,6 +34,7 @@
 		4C859DB522E6B51200E85A29 /* Boilerplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Boilerplate.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Requests/Boilerplate.swift"; sourceTree = "<group>"; };
 		4C859DB722E6B61400E85A29 /* GetAllGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetAllGroups.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Requests/GetAllGroups.swift"; sourceTree = "<group>"; };
 		4CC74E2122E61C130084F3F4 /* Generics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Generics.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Helpers/Generics.swift"; sourceTree = "<group>"; };
+		4CEA1BF122E6DA4D002EAF96 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				4C34084922E57A3E0029654D /* Classes */,
+				4CEA1BF022E6DA4D002EAF96 /* Playgrounds */,
 				4C34083D22E576BF0029654D /* Resources */,
 				4C34082F22E5761F0029654D /* Products */,
 			);
@@ -129,6 +131,14 @@
 				4C5FA13322E66859000FA1FC /* JSON.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4CEA1BF022E6DA4D002EAF96 /* Playgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				4CEA1BF122E6DA4D002EAF96 /* MyPlayground.playground */,
+			);
+			path = Playgrounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
