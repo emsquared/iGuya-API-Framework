@@ -80,9 +80,14 @@ public extension Request.GetAllGroups
 			return
 		}
 
+		parseData(data!, completionHandler)
+	}
+
+	internal static func parseData(_ data: URLSession.JSONData, _ completionHandler: CompletionHandler)
+	{
 		var groups: Groups = []
 
-		for (key, value) in data! {
+		for (key, value) in data {
 			guard let identifier = Int(key) else {
 				print("Failed to cast group identifier into integer.")
 
