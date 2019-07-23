@@ -1,0 +1,271 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C34084722E579810029654D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084622E579810029654D /* Group.swift */; };
+		4C34084B22E57A4D0029654D /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084A22E57A4D0029654D /* Series.swift */; };
+		4C34084E22E57A9F0029654D /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084D22E57A9F0029654D /* Chapter.swift */; };
+		4C34085322E57F660029654D /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34085222E57F660029654D /* Volume.swift */; };
+		4C5FA13222E66670000FA1FC /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FA13122E66670000FA1FC /* Dictionary.swift */; };
+		4C5FA13422E66859000FA1FC /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FA13322E66859000FA1FC /* JSON.swift */; };
+		4C5FA13922E6870E000FA1FC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C5FA13822E6870E000FA1FC /* LICENSE.txt */; };
+		4CC74E2222E61C130084F3F4 /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC74E2122E61C130084F3F4 /* Generics.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4C34082E22E5761F0029654D /* iGuyaAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iGuyaAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C34084222E577050029654D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C34084422E577100029654D /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Foundation Debug.xcconfig"; path = "Configurations/Foundation Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C34084522E577100029654D /* Foundation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Foundation.xcconfig; path = Configurations/Foundation.xcconfig; sourceTree = SOURCE_ROOT; };
+		4C34084622E579810029654D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		4C34084A22E57A4D0029654D /* Series.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Series.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Series.swift"; sourceTree = "<group>"; };
+		4C34084D22E57A9F0029654D /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Chapter.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Chapter.swift"; sourceTree = "<group>"; };
+		4C34085222E57F660029654D /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Volume.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Volume.swift"; sourceTree = "<group>"; };
+		4C5FA13122E66670000FA1FC /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dictionary.swift; path = "../../../Textual/Frameworks/Cocoa Extensions/Classes/Dictionary.swift"; sourceTree = "<group>"; };
+		4C5FA13322E66859000FA1FC /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Helpers/JSON.swift"; sourceTree = "<group>"; };
+		4C5FA13822E6870E000FA1FC /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
+		4CC74E2122E61C130084F3F4 /* Generics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Generics.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Helpers/Generics.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4C34082B22E5761F0029654D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4C34082422E5761F0029654D = {
+			isa = PBXGroup;
+			children = (
+				4C34084922E57A3E0029654D /* Classes */,
+				4C34083D22E576BF0029654D /* Resources */,
+				4C34082F22E5761F0029654D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4C34082F22E5761F0029654D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C34082E22E5761F0029654D /* iGuyaAPI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C34083D22E576BF0029654D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C34084022E576F00029654D /* Build Configurations */,
+				4C5FA13722E686F3000FA1FC /* Documentation */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4C34084022E576F00029654D /* Build Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4C34084422E577100029654D /* Foundation Debug.xcconfig */,
+				4C34084522E577100029654D /* Foundation.xcconfig */,
+				4C34084122E576F90029654D /* Properties */,
+			);
+			name = "Build Configurations";
+			sourceTree = "<group>";
+		};
+		4C34084122E576F90029654D /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				4C34084222E577050029654D /* Info.plist */,
+			);
+			name = Properties;
+			sourceTree = "<group>";
+		};
+		4C34084922E57A3E0029654D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4CC74E2022E61C070084F3F4 /* Helpers */,
+				4C34084D22E57A9F0029654D /* Chapter.swift */,
+				4C34084622E579810029654D /* Group.swift */,
+				4C34084A22E57A4D0029654D /* Series.swift */,
+				4C34085222E57F660029654D /* Volume.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4C5FA13722E686F3000FA1FC /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				4C5FA13822E6870E000FA1FC /* LICENSE.txt */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+		4CC74E2022E61C070084F3F4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4C5FA13122E66670000FA1FC /* Dictionary.swift */,
+				4CC74E2122E61C130084F3F4 /* Generics.swift */,
+				4C5FA13322E66859000FA1FC /* JSON.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4C34082922E5761F0029654D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4C34082D22E5761F0029654D /* iGuya API */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C34083622E5761F0029654D /* Build configuration list for PBXNativeTarget "iGuya API" */;
+			buildPhases = (
+				4C34082922E5761F0029654D /* Headers */,
+				4C34082A22E5761F0029654D /* Sources */,
+				4C34082B22E5761F0029654D /* Frameworks */,
+				4C34082C22E5761F0029654D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iGuya API";
+			productName = "iGuya API";
+			productReference = 4C34082E22E5761F0029654D /* iGuyaAPI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4C34082522E5761F0029654D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = iGuya;
+				TargetAttributes = {
+					4C34082D22E5761F0029654D = {
+						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1100;
+					};
+				};
+			};
+			buildConfigurationList = 4C34082822E5761F0029654D /* Build configuration list for PBXProject "iGuya API" */;
+			compatibilityVersion = "Xcode 11.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4C34082422E5761F0029654D;
+			productRefGroup = 4C34082F22E5761F0029654D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4C34082D22E5761F0029654D /* iGuya API */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4C34082C22E5761F0029654D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C5FA13922E6870E000FA1FC /* LICENSE.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C34082A22E5761F0029654D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C34084E22E57A9F0029654D /* Chapter.swift in Sources */,
+				4C5FA13422E66859000FA1FC /* JSON.swift in Sources */,
+				4C34084B22E57A4D0029654D /* Series.swift in Sources */,
+				4CC74E2222E61C130084F3F4 /* Generics.swift in Sources */,
+				4C34084722E579810029654D /* Group.swift in Sources */,
+				4C34085322E57F660029654D /* Volume.swift in Sources */,
+				4C5FA13222E66670000FA1FC /* Dictionary.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4C34083422E5761F0029654D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C34084422E577100029654D /* Foundation Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		4C34083522E5761F0029654D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C34084522E577100029654D /* Foundation.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		4C34083722E5761F0029654D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.unstable.frameworks.iGuya-API";
+				PRODUCT_NAME = iGuyaAPI;
+			};
+			name = Debug;
+		};
+		4C34083822E5761F0029654D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.unstable.frameworks.iGuya-API";
+				PRODUCT_NAME = iGuyaAPI;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4C34082822E5761F0029654D /* Build configuration list for PBXProject "iGuya API" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C34083422E5761F0029654D /* Debug */,
+				4C34083522E5761F0029654D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C34083622E5761F0029654D /* Build configuration list for PBXNativeTarget "iGuya API" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C34083722E5761F0029654D /* Debug */,
+				4C34083822E5761F0029654D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4C34082522E5761F0029654D /* Project object */;
+}
