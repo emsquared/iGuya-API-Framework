@@ -39,7 +39,8 @@ import Foundation
 ///
 /// `Book` represents a specific manga.
 ///
-final public class Book {
+final public class Book
+{
 	///
 	/// The identifier used by the remote API
 	/// to identify this book.

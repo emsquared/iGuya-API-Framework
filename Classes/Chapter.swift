@@ -39,7 +39,8 @@ import Foundation
 ///
 /// `Chapter` represents a specific chapter in `volume`
 ///
-final public class Chapter {
+final public class Chapter
+{
 	///
 	/// The volume the chapter belongs to.
 	///

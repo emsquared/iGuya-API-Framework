@@ -41,7 +41,8 @@
 /// volume, they are still stored within a `Volume`.
 /// The `Volume` for ongoing chapters have a nil `number`.
 ///
-final public class Volume {
+final public class Volume
+{
 	///
 	/// The book the volume belongs to.
 	///

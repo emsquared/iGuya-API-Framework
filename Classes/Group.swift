@@ -37,7 +37,8 @@
 ///
 /// `Group` represents a specific scanlator group.
 ///
-final public class Group {
+final public class Group
+{
 	///
 	/// The identifier used by the remote API
 	/// to identify this group.
