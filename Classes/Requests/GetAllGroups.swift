@@ -36,56 +36,79 @@
 
 import Foundation
 
-extension Request.Locations
-{
-	static let getAllGroups = "\(base)/get_all_groups"
-}
-
 public extension Request
 {
-	convenience init (getAllGroups completionHandler: @escaping (Groups?, RequestError?) -> Void)
+	convenience init (getAllGroups completionHandler: @escaping GetAllGroups.CompletionHandler)
 	{
-		let location = Locations.getAllGroups
+		let taskd = GetAllGroups.task(with: completionHandler)
+
+		self.init(with: taskd)
+	}
+
+	class GetAllGroups
+	{
+	}
+}
+
+public extension Request.GetAllGroups
+{
+	typealias CompletionHandler = (Groups?, Request.Failure?) -> Void
+
+	fileprivate static func task(with completionHandler: @escaping CompletionHandler) -> URLSessionDataTask
+	{
+		let location = Request.Locations.getAllGroups
 
 		/* This may throw because the location that is supplied does not
 		 produce a URL object. We control the address supplied to it which
 		 means it is safe for us to force the error aside. */
 		let taskd = try! URLSession.shared.JSONDataTask(with: location) { (data, error) in
-			if let error = error {
-				print("Error received: \(error)")
+			taskCompleted(data, error, completionHandler)
+		}
+
+		return taskd
+	}
+
+	fileprivate static func taskCompleted(_ data: URLSession.JSONData?,
+										  _ error: URLSession.JSONDataTaskError?,
+										  _ completionHandler: CompletionHandler)
+	{
+		if let error = error {
+			print("Error received: \(error)")
+
+			completionHandler(nil, .unimplemented)
+
+			return
+		}
+
+		var groups: Groups = []
+
+		for (key, value) in data! {
+			guard let identifier = Int(key) else {
+				print("Failed to cast group identifier into integer.")
 
 				completionHandler(nil, .unimplemented)
 
-				return
+				continue
 			}
 
-			var groups: Groups = []
+			guard let name = value as? String else {
+				print("Failed to cast group name into string.")
 
-			for (key, value) in data! {
-				guard let identifier = Int(key) else {
-					print("Failed to cast group identifier into integer.")
+				completionHandler(nil, .unimplemented)
 
-					completionHandler(nil, .unimplemented)
-
-					continue
-				}
-
-				guard let name = value as? String else {
-					print("Failed to cast group name into string.")
-
-					completionHandler(nil, .unimplemented)
-
-					continue
-				}
-
-				let group = Group(identifier: identifier, name: name)
-
-				groups.append(group)
+				continue
 			}
 
-			completionHandler(groups, nil)
-		} // Task
+			let group = Group(identifier: identifier, name: name)
 
-		self.init(with: taskd)
+			groups.append(group)
+		}
+
+		completionHandler(groups, nil)
 	}
+}
+
+extension Request.Locations
+{
+	static let getAllGroups = "\(base)/get_all_groups"
 }
