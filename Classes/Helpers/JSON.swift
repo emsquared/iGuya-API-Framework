@@ -107,6 +107,9 @@ extension URLSession
 	/// - Parameter url: The URL to be retrieved.
 	/// - Parameter completionHandler: The completion handler to call when the task is complete.
 	///
+	/// Newly-initialized tasks begin in a suspended state, so you
+	/// need to call the `resume()` function to start the task.
+	///
 	func JSONDataTask(with url: URL, completionHandler: @escaping JSONDataTaskCallback) -> URLSessionDataTask
 	{
 		let session = URLSession.shared
@@ -158,8 +161,6 @@ extension URLSession
 
 			completionHandler(json, nil)
 		}
-
-		sessionTask.resume()
 
 		return sessionTask
 	}
