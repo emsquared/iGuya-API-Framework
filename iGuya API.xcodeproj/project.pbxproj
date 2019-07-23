@@ -14,6 +14,8 @@
 		4C34085322E57F660029654D /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34085222E57F660029654D /* Volume.swift */; };
 		4C5FA13422E66859000FA1FC /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FA13322E66859000FA1FC /* JSON.swift */; };
 		4C5FA13922E6870E000FA1FC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C5FA13822E6870E000FA1FC /* LICENSE.txt */; };
+		4C859DB622E6B51200E85A29 /* Boilerplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C859DB522E6B51200E85A29 /* Boilerplate.swift */; };
+		4C859DB822E6B61400E85A29 /* GetAllGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C859DB722E6B61400E85A29 /* GetAllGroups.swift */; };
 		4CC74E2222E61C130084F3F4 /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC74E2122E61C130084F3F4 /* Generics.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +31,8 @@
 		4C34085222E57F660029654D /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Volume.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Volume.swift"; sourceTree = "<group>"; };
 		4C5FA13322E66859000FA1FC /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Helpers/JSON.swift"; sourceTree = "<group>"; };
 		4C5FA13822E6870E000FA1FC /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
+		4C859DB522E6B51200E85A29 /* Boilerplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Boilerplate.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Requests/Boilerplate.swift"; sourceTree = "<group>"; };
+		4C859DB722E6B61400E85A29 /* GetAllGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetAllGroups.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Requests/GetAllGroups.swift"; sourceTree = "<group>"; };
 		4CC74E2122E61C130084F3F4 /* Generics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Generics.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Helpers/Generics.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +94,7 @@
 		4C34084922E57A3E0029654D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4C859DB422E6B4C900E85A29 /* Requests */,
 				4CC74E2022E61C070084F3F4 /* Helpers */,
 				4C34084D22E57A9F0029654D /* Chapter.swift */,
 				4C34084622E579810029654D /* Group.swift */,
@@ -105,6 +110,15 @@
 				4C5FA13822E6870E000FA1FC /* LICENSE.txt */,
 			);
 			name = Documentation;
+			sourceTree = "<group>";
+		};
+		4C859DB422E6B4C900E85A29 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				4C859DB522E6B51200E85A29 /* Boilerplate.swift */,
+				4C859DB722E6B61400E85A29 /* GetAllGroups.swift */,
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		4CC74E2022E61C070084F3F4 /* Helpers */ = {
@@ -201,8 +215,10 @@
 				4C5FA13422E66859000FA1FC /* JSON.swift in Sources */,
 				4C34084B22E57A4D0029654D /* Book.swift in Sources */,
 				4CC74E2222E61C130084F3F4 /* Generics.swift in Sources */,
+				4C859DB622E6B51200E85A29 /* Boilerplate.swift in Sources */,
 				4C13D47C22E6909400899DCA /* Dictionary.swift in Sources */,
 				4C34084722E579810029654D /* Group.swift in Sources */,
+				4C859DB822E6B61400E85A29 /* GetAllGroups.swift in Sources */,
 				4C34085322E57F660029654D /* Volume.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
