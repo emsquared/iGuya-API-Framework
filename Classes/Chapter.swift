@@ -37,7 +37,7 @@
 import Foundation
 
 ///
-/// `Chapter` represents a specific chapter in `series`
+/// `Chapter` represents a specific chapter in `volume`
 ///
 final public class Chapter {
 	///

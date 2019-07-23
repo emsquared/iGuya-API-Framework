@@ -39,7 +39,7 @@ import Foundation
 ///
 /// `Series` represents a specific manga.
 ///
-final public class Series {
+final public class Manga {
 	///
 	/// The identifier used by the remote API
 	/// to identify this series.
@@ -126,8 +126,8 @@ final class SeriesMutable {
 	/// Throws:
 	///   - `MutabilityError.nilValue`
 	///
-	func copy() throws -> Series
+	func copy() throws -> Manga
 	{
-		return try Series(with: self)
+		return try Manga(with: self)
 	}
 }

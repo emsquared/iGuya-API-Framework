@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C13D47C22E6909400899DCA /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C13D47B22E6909400899DCA /* Dictionary.swift */; };
 		4C34084722E579810029654D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084622E579810029654D /* Group.swift */; };
-		4C34084B22E57A4D0029654D /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084A22E57A4D0029654D /* Series.swift */; };
+		4C34084B22E57A4D0029654D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084A22E57A4D0029654D /* Book.swift */; };
 		4C34084E22E57A9F0029654D /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084D22E57A9F0029654D /* Chapter.swift */; };
 		4C34085322E57F660029654D /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34085222E57F660029654D /* Volume.swift */; };
 		4C5FA13422E66859000FA1FC /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5FA13322E66859000FA1FC /* JSON.swift */; };
@@ -24,7 +24,7 @@
 		4C34084422E577100029654D /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Foundation Debug.xcconfig"; path = "Configurations/Foundation Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C34084522E577100029654D /* Foundation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Foundation.xcconfig; path = Configurations/Foundation.xcconfig; sourceTree = SOURCE_ROOT; };
 		4C34084622E579810029654D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
-		4C34084A22E57A4D0029654D /* Series.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Series.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Series.swift"; sourceTree = "<group>"; };
+		4C34084A22E57A4D0029654D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Book.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Book.swift"; sourceTree = "<group>"; };
 		4C34084D22E57A9F0029654D /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Chapter.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Chapter.swift"; sourceTree = "<group>"; };
 		4C34085222E57F660029654D /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Volume.swift; path = "../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Volume.swift"; sourceTree = "<group>"; };
 		4C5FA13322E66859000FA1FC /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = "../../../../../../System/Volumes/Data/Users/michael/Projects/iGuya API/Classes/Helpers/JSON.swift"; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 				4CC74E2022E61C070084F3F4 /* Helpers */,
 				4C34084D22E57A9F0029654D /* Chapter.swift */,
 				4C34084622E579810029654D /* Group.swift */,
-				4C34084A22E57A4D0029654D /* Series.swift */,
+				4C34084A22E57A4D0029654D /* Book.swift */,
 				4C34085222E57F660029654D /* Volume.swift */,
 			);
 			path = Classes;
@@ -199,7 +199,7 @@
 			files = (
 				4C34084E22E57A9F0029654D /* Chapter.swift in Sources */,
 				4C5FA13422E66859000FA1FC /* JSON.swift in Sources */,
-				4C34084B22E57A4D0029654D /* Series.swift in Sources */,
+				4C34084B22E57A4D0029654D /* Book.swift in Sources */,
 				4CC74E2222E61C130084F3F4 /* Generics.swift in Sources */,
 				4C13D47C22E6909400899DCA /* Dictionary.swift in Sources */,
 				4C34084722E579810029654D /* Group.swift in Sources */,

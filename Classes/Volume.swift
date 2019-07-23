@@ -35,7 +35,7 @@
  *********************************************************************** */
 
 ///
-/// `Volume` represents a specific volume in `series`
+/// `Volume` represents a specific volume in `book`
 ///
 /// Even for chapters that are part of an unfinished
 /// volume, they are still stored within a `Volume`.
@@ -43,11 +43,11 @@
 ///
 final public class Volume {
 	///
-	/// The series the volume belongs to.
+	/// The book the volume belongs to.
 	///
 	/// This is a weak reference.
 	///
-	public fileprivate(set) weak var series: Series?
+	public fileprivate(set) weak var book: Book?
 
 	///
 	/// The volume number.
@@ -62,9 +62,9 @@ final public class Volume {
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (series: Series, number: Int, chapters: Chapters)
+	init (book: Book, number: Int, chapters: Chapters)
 	{
-		self.series = series
+		self.book = book
 		self.number = number
 		self.chapters = chapters
 	}
