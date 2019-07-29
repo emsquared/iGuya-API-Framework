@@ -52,7 +52,7 @@ public extension Request
 
 public extension Request.GetAllGroups
 {
-	typealias CompletionHandler = (Groups?, Request.Failure?) -> Void
+	typealias CompletionHandler = (Result<Groups, Request.Failure>) -> Void
 
 	fileprivate static func task(with completionHandler: @escaping CompletionHandler) -> URLSessionDataTask
 	{
@@ -61,29 +61,30 @@ public extension Request.GetAllGroups
 		/* This may throw because the location that is supplied does not
 		 produce a URL object. We control the address supplied to it which
 		 means it is safe for us to force the error aside. */
-		let taskd = try! URLSession.shared.JSONDataTask(with: location) { (data, error) in
-			taskCompleted(data, error, completionHandler)
+		let taskd = try! URLSession.shared.JSONDataTask(with: location) { (result) in
+			switch result {
+				case .failure(let error):
+					taskFailed(with: error, completionHandler: completionHandler)
+				case .success(let data):
+					taskCompleted(with: data, completionHandler: completionHandler)
+			}
 		}
 
 		return taskd
 	}
 
-	fileprivate static func taskCompleted(_ data: URLSession.JSONData?,
-										  _ error: URLSession.JSONDataTaskError?,
-										  _ completionHandler: CompletionHandler)
+	fileprivate static func taskFailed(with error: URLSession.JSONDataTaskError,
+									  completionHandler: CompletionHandler)
 	{
-		if let error = error {
-			print("Error received: \(error)")
+		print("Error received: \(error)")
 
-			completionHandler(nil, .unimplemented)
+		completionHandler(.failure(.unimplemented))
 
-			return
-		}
-
-		parseData(data!, completionHandler)
+		return
 	}
 
-	internal static func parseData(_ data: URLSession.JSONData, _ completionHandler: CompletionHandler)
+	fileprivate static func taskCompleted(with data: URLSession.JSONData,
+										  completionHandler: CompletionHandler)
 	{
 		var groups: Groups = []
 
@@ -91,7 +92,7 @@ public extension Request.GetAllGroups
 			guard let identifier = Int(key) else {
 				print("Failed to cast group identifier into integer.")
 
-				completionHandler(nil, .unimplemented)
+				completionHandler(.failure(.unimplemented))
 
 				continue
 			}
@@ -99,7 +100,7 @@ public extension Request.GetAllGroups
 			guard let name = value as? String else {
 				print("Failed to cast group name into string.")
 
-				completionHandler(nil, .unimplemented)
+				completionHandler(.failure(.unimplemented))
 
 				continue
 			}
@@ -109,7 +110,7 @@ public extension Request.GetAllGroups
 			groups.append(group)
 		}
 
-		completionHandler(groups, nil)
+		completionHandler(.success(groups))
 	}
 }
 

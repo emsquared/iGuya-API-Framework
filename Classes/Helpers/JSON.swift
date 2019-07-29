@@ -98,7 +98,7 @@ extension URLSession
 	///
 	/// Both parameters will never be `nil` at the same time.
 	///
-	typealias JSONDataTaskCallback = (_ data: JSONData?, _ error: JSONDataTaskError?) -> Void
+	typealias JSONDataTaskCallback = (Result<JSONData, JSONDataTaskError>) -> Void
 
 	///
 	/// Creates and starts a `URLSession` data task with the purpose
@@ -116,13 +116,13 @@ extension URLSession
 
 		let sessionTask = session.dataTask(with: url) { (data, response, error) in
 			if let error = error {
-				completionHandler(nil, .sessionError(error))
+				completionHandler(.failure(.sessionError(error)))
 
 				return
 			}
 
 			guard let response = response as? HTTPURLResponse else {
-				completionHandler(nil, .responseNotHTTP)
+				completionHandler(.failure(.responseNotHTTP))
 
 				return
 			}
@@ -130,7 +130,7 @@ extension URLSession
 			let statusCode = response.statusCode
 
 			guard statusCode == 200 else {
-				completionHandler(nil, .responseNotOK(statusCode: statusCode))
+				completionHandler(.failure(.responseNotOK(statusCode: statusCode)))
 
 				return
 			}
@@ -138,7 +138,7 @@ extension URLSession
 			/* data should never be nil because we already checked if error is. */
 			/* I have this check because I want to be sane as possible. */
 			guard let data = data else {
-				completionHandler(nil, .dataMalformed)
+				completionHandler(.failure(.dataMalformed))
 
 				return
 			}
@@ -148,18 +148,18 @@ extension URLSession
 			do {
 				jsonObject = try JSONSerialization.jsonObject(with: data)
 			} catch let decodeError {
-				completionHandler(nil, .decodeError(decodeError))
+				completionHandler(.failure(.decodeError(decodeError)))
 
 				return
 			}
 
 			guard let json = jsonObject as? JSONData else {
-				completionHandler(nil, .dataMalformed)
+				completionHandler(.failure(.dataMalformed))
 
 				return
 			}
 
-			completionHandler(json, nil)
+			completionHandler(.success(json))
 		}
 
 		return sessionTask
