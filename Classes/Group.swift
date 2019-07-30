@@ -75,6 +75,7 @@ final public class Group
 	fileprivate static let sharedGroupsQueue =
 		DispatchQueue(label: "SharedGroupsQueue")
 
+	@discardableResult
 	static func createGroup(identifier: Int, name: String) -> Group
 	{
 		var group: Group?
