@@ -34,6 +34,8 @@
  *
  *********************************************************************** */
 
+import Dispatch
+
 ///
 /// `Group` represents a specific scanlator group.
 ///
@@ -57,6 +59,37 @@ final public class Group
 	{
 		self.identifier = identifier
 		self.name = name
+	}
+
+	//
+	// Groups are consistent across the entire guya platform which means
+	// we can use a factory to always return the same Group object.
+	//
+	// A dispatch queue is used in the factory to guarantee that the object
+	// store is always accessed synchronously preventing race conditions.
+	//
+	// In reality this may be an over optimization.
+	//
+	fileprivate static var sharedGroups:[Int : Group] = [:]
+
+	fileprivate static let sharedGroupsQueue =
+		DispatchQueue(label: "SharedGroupsQueue")
+
+	static func createGroup(identifier: Int, name: String) -> Group
+	{
+		var group: Group?
+
+		sharedGroupsQueue.sync {
+			group = sharedGroups[identifier]
+
+			if (group == nil) {
+				group = Group(identifier: identifier, name: name)
+
+				sharedGroups[identifier] = group!
+			}
+		}
+
+		return group!
 	}
 }
 
