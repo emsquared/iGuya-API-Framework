@@ -92,6 +92,17 @@ final public class Group
 
 		return group!
 	}
+
+	static func group(with identifier: Int) -> Group?
+	{
+		var group: Group?
+
+		sharedGroupsQueue.sync {
+			group = sharedGroups[identifier]
+		}
+
+		return group
+	}
 }
 
 ///
