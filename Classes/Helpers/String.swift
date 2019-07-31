@@ -36,8 +36,20 @@
 
 extension String
 {
+	@inlinable
     func matches(_ expression: String) -> Bool
 	{
         return range(of: expression, options: .regularExpression, range: nil, locale: nil) != nil
     }
+
+	@inlinable
+	func compareAsDouble(_ other: String, _ comparator: (Double, Double) -> Bool) -> Bool
+	{
+		guard	let value1 = Double(self),
+				let value2 = Double(other) else {
+				return false
+		}
+
+		return comparator(value1, value2)
+	}
 }

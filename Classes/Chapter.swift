@@ -39,7 +39,7 @@ import Foundation
 ///
 /// `Chapter` represents a specific chapter in `volume`
 ///
-final public class Chapter
+final public class Chapter : Comparable, CustomStringConvertible
 {
 	///
 	/// The volume the chapter belongs to.
@@ -47,9 +47,14 @@ final public class Chapter
 	public fileprivate(set) weak var volume: Volume?
 
 	///
-	/// The chapter number.
+	/// Number of the chapter.
 	///
-	public fileprivate(set) var number: Int
+	public fileprivate(set) var number: String
+
+	///
+	/// Title of the chapter.
+	///
+	public fileprivate(set) var title: String
 
 	///
 	/// A chapter can have multiple releases.
@@ -57,7 +62,7 @@ final public class Chapter
 	/// And one from a JP -> EN group.
 	/// `Release` represents a specific release.
 	///
-	public struct Release {
+	public struct Release : Comparable, CustomStringConvertible {
 		///
 		/// The group that created the release.
 		///
@@ -67,6 +72,28 @@ final public class Chapter
 		/// List of pages, in order, for the release.
 		///
 		public let pages: [URL]
+
+		///
+		/// String representation of `Release`.
+		///
+		public var description: String
+		{
+			return """
+			Release(
+				group: \(group),
+				pages:
+					\(pages)
+			)
+			"""
+		}
+
+		///
+		/// Sort by `group`.
+		///
+		public static func < (lhs: Release, rhs: Release) -> Bool
+		{
+			return lhs.group < rhs.group
+		}
 	}
 
 	///
@@ -82,11 +109,66 @@ final public class Chapter
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (volume: Volume?, number: Int, releases: Releases)
+	init (volume: Volume?, number: String, title: String, releases: Releases)
 	{
 		self.volume = volume
 		self.number = number
-		self.releases = releases
+		self.title = title
+		self.releases = releases.sorted(by: <)
+	}
+
+	///
+	/// `Chapter` objects are created before `Volume` objects.
+	/// `assignVolume()` assigns a `Volume` object once it
+	/// becomes available.
+	///
+	/// This function only assigns the volume if none is set.
+	///
+	/// This function is automatically called by the `willSet`
+	/// handler for the `chapters` property in `Volume`.
+	/// There is no need to call it directly.
+	///
+	/// - Parameter volume: The volume the chapter belongs to.
+	///
+	func assignVolume(_ volume: Volume)
+	{
+		if self.volume == nil {
+			self.volume = volume
+		}
+	}
+
+	///
+	/// String representation of `Chapter`.
+	///
+	public var description: String
+	{
+		return """
+		Chapter(
+			number: '\(number)',
+			title: '\(title)',
+			releases:
+				\(releases)
+		)
+		"""
+	}
+
+	///
+	/// Sort by `number`.
+	///
+	public static func < (lhs: Chapter, rhs: Chapter) -> Bool
+	{
+		let number1 = lhs.number
+		let number2 = rhs.number
+
+		return number1.compareAsDouble(number2, <)
+	}
+
+	///
+	/// Equal if both are the same reference.
+	///
+	public static func == (lhs: Chapter, rhs: Chapter) -> Bool
+	{
+		return lhs === rhs
 	}
 }
 

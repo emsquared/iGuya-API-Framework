@@ -37,11 +37,7 @@
 ///
 /// `Volume` represents a specific volume in `book`
 ///
-/// Even for chapters that are part of an unfinished
-/// volume, they are still stored within a `Volume`.
-/// The `Volume` for ongoing chapters have a nil `number`.
-///
-final public class Volume
+final public class Volume : Comparable, CustomStringConvertible
 {
 	///
 	/// The book the volume belongs to.
@@ -53,21 +49,78 @@ final public class Volume
 	///
 	/// The volume number.
 	///
-	public fileprivate(set) var number: Int?
+	public fileprivate(set) var number: String
 
 	///
 	/// Chapters the volume contains.
 	///
-	public fileprivate(set) var chapters: Chapters
+	public fileprivate(set) var chapters: Chapters {
+		willSet (chapters) {
+			chapters.forEach { $0.assignVolume(self) }
+		}
+	}
 
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (book: Book, number: Int, chapters: Chapters)
+	init (book: Book?, number: String, chapters: Chapters)
 	{
 		self.book = book
 		self.number = number
-		self.chapters = chapters
+		self.chapters = chapters.sorted(by: <)
+	}
+
+	///
+	/// `Volume` objects are created before `Book` objects.
+	/// `assignBook()` assigns a `Book` object once it
+	/// becomes available.
+	///
+	/// This function only assigns the book if none is set.
+	///
+	/// This function is automatically called by the `willSet`
+	/// handler for the `volumes` property in `Book`.
+	/// There is no need to call it directly.
+	///
+	/// - Parameter book: The book the volume belongs to.
+	///
+	func assignBook(_ book: Book)
+	{
+		if self.book == nil {
+			self.book = book
+		}
+	}
+
+	///
+	/// String representation of `Volume`.
+	///
+	public var description: String
+	{
+		return """
+		Volume(
+			number: '\(number)',
+			chapters:
+				\(chapters)
+		)
+		"""
+	}
+
+	///
+	/// Sort by `number`.
+	///
+	public static func < (lhs: Volume, rhs: Volume) -> Bool
+	{
+		let number1 = lhs.number
+		let number2 = rhs.number
+
+		return number1.compareAsDouble(number2, <)
+	}
+
+	///
+	/// Equal if both are the same reference.
+	///
+	public static func == (lhs: Volume, rhs: Volume) -> Bool
+	{
+		return lhs === rhs
 	}
 }
 

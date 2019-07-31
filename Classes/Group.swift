@@ -39,13 +39,13 @@ import Dispatch
 ///
 /// `Group` represents a specific scanlator group.
 ///
-final public class Group
+final public class Group : Comparable, CustomStringConvertible
 {
 	///
 	/// The identifier used by the remote API
 	/// to identify this group.
 	///
-	public fileprivate(set) var identifier: Int
+	public fileprivate(set) var identifier: String
 
 	///
 	/// Name of the group.
@@ -55,7 +55,7 @@ final public class Group
 	///
 	/// Create a new instance of `Group`.
 	///
-	init (identifier: Int, name: String)
+	init (identifier: String, name: String)
 	{
 		self.identifier = identifier
 		self.name = name
@@ -70,13 +70,13 @@ final public class Group
 	//
 	// In reality this may be an over optimization.
 	//
-	fileprivate static var sharedGroups:[Int : Group] = [:]
+	fileprivate static var sharedGroups:[String : Group] = [:]
 
 	fileprivate static let sharedGroupsQueue =
 		DispatchQueue(label: "SharedGroupsQueue")
 
 	@discardableResult
-	static func createGroup(identifier: Int, name: String) -> Group
+	static func createGroup(identifier: String, name: String) -> Group
 	{
 		var group: Group?
 
@@ -93,7 +93,7 @@ final public class Group
 		return group!
 	}
 
-	static func group(with identifier: Int) -> Group?
+	static func group(with identifier: String) -> Group?
 	{
 		var group: Group?
 
@@ -102,6 +102,30 @@ final public class Group
 		}
 
 		return group
+	}
+
+	///
+	/// String representation of `Group`.
+	///
+	public var description: String
+	{
+		return "Group('\(identifier)': '\(name)')"
+	}
+
+	///
+	/// Sort by `name`.
+	///
+	public static func < (lhs: Group, rhs: Group) -> Bool
+	{
+		return lhs.name < rhs.name
+	}
+
+	///
+	/// Equal if both are the same reference.
+	///
+	public static func == (lhs: Group, rhs: Group) -> Bool
+	{
+		return lhs === rhs
 	}
 }
 

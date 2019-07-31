@@ -39,7 +39,7 @@ import Foundation
 ///
 /// `Book` represents a specific manga.
 ///
-final public class Book
+final public class Book : Comparable, CustomStringConvertible
 {
 	///
 	/// The identifier used by the remote API
@@ -67,7 +67,7 @@ final public class Book
 	///
 	/// Description of the book.
 	///
-	public fileprivate(set) var description: String
+	public fileprivate(set) var summary: String
 
 	///
 	/// Cover image of the book.
@@ -81,7 +81,30 @@ final public class Book
 	/// volume, they are still stored within a `Volume`.
 	/// The `Volume` for ongoing chapters have a nil `number`.
 	///
-	public fileprivate(set) var volumes: Volumes
+	public fileprivate(set) var volumes: Volumes {
+		willSet (volumes) {
+			volumes.forEach { $0.assignBook(self) }
+		}
+	}
+
+	///
+	/// String representation of `Book`.
+	///
+	public var description: String
+	{
+		return """
+		Book(
+			identifier: '\(identifier)',
+			title: '\(title)',
+			author: '\(author)',
+			artist: '\(artist)',
+			description: '\(summary)',
+			cover image: '\(cover)',
+			volumes:
+				'\(volumes)'
+		)
+		"""
+	}
 
 	///
 	/// See description of `BookMutable`
@@ -92,9 +115,25 @@ final public class Book
 		title 			= try assignOrThrow(mutableBook.title)
 		author			= try assignOrThrow(mutableBook.author)
 		artist 			= try assignOrThrow(mutableBook.artist)
-		description 	= try assignOrThrow(mutableBook.description)
+		summary 		= try assignOrThrow(mutableBook.summary)
 		cover 			= try assignOrThrow(mutableBook.cover)
-		volumes 		= try assignOrThrow(mutableBook.volumes)
+		volumes 		= try assignOrThrow(mutableBook.volumes).sorted(by: <)
+	}
+
+	///
+	/// Sort by `title`.
+	///
+	public static func < (lhs: Book, rhs: Book) -> Bool
+	{
+		return lhs.title < rhs.title
+	}
+
+	///
+	/// Equal if both are the same reference.
+	///
+	public static func == (lhs: Book, rhs: Book) -> Bool
+	{
+		return lhs === rhs
 	}
 }
 
@@ -118,7 +157,7 @@ final class BookMutable
 	var title: String?
 	var author: String?
 	var artist: String?
-	var description: String?
+	var summary: String?
 	var cover: URL?
 	var volumes: [Volume]?
 
