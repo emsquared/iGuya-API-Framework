@@ -35,99 +35,107 @@
  *********************************************************************** */
 
 import Foundation
+import os.log
 
 ///
-/// `Request` acts as host of sessions tasks for performing API requests.
+/// `RequestJSON` is a specialized generic subclass of `Request` which is
+/// capable of making calls to the API for subclasses which expect JSON.
 ///
-/// Each API request is divided into an extension of `Request` with their
-/// own convenience initializer.
+/// - SeeAlso: Request
 ///
-public class Request
+class RequestJSON<RequestType> : Request<RequestType>
 {
 	///
-	/// Locations for API gateways.
+	/// Task that the request hosts.
 	///
-	/// Each type of request extends this class to add its own location.
-	///
-	final class Locations
-	{
-		static let base = "https://guya.moe/api"
-	}
-
-	///
-	/// Errors thrown by `Request`.
-	///
-	public enum Failure : Error
-	{
-		///
-		/// Placeholder error until others are added.
-		///
-		case unimplemented
-	}
-
 	fileprivate var task: URLSessionDataTask?
 
-	init (with task: URLSessionDataTask)
+	///
+	/// The remote address (URL) of the endpoint for the request.
+	///
+	/// Subclasses of `RequestJSON` do not currently require arguments
+	/// to be passed to the location. If a time comes that is needed,
+	/// then we could add an additional property for returning a
+	/// formatted `NSURLRequest`.
+	///
+	var taskLocation: String?
 	{
-		self.task = task
+		return nil
 	}
 
 	/* Task is discarded when `Request` is no longer in use. */
 	deinit
 	{
 		task = nil
-
-		print("Request discarded")
 	}
 
-	///
-	/// Start the request.
-	///
-	/// Newly-initialized requests begin in a suspended state, so you
-	/// need to call this function to start the request.
-	///
-	/// - Returns: `true` on success. `false` otherwise.
-	///
-	@discardableResult public func start() -> Bool
+	@discardableResult public override func start() -> Bool
 	{
-		guard let task = task else {
+		var taskRef = task
+
+		if (taskRef == nil) {
+			taskRef = constructTask()
+		}
+
+		/* Another nil check is not needed because
+		 the state will never be suspended if we
+		 have a nil task returned by constructor. */
+		guard taskRef?.state == .suspended else {
 			return false
 		}
 
-		guard task.state == .suspended else {
-			print("Task is not suspended")
+		taskRef?.resume()
 
+		return true
+	}
+
+	@discardableResult public override func cancel() -> Bool
+	{
+		let taskRef = task
+
+		guard taskRef?.state == .running else {
 			return false
 		}
 
-		task.resume()
-
-		print("Started task: \(task)")
+		taskRef?.cancel()
 
 		return true
 	}
 
 	///
-	/// Cancel the request.
+	/// Called if request fails.
 	///
-	/// - Returns: `true` on success. `false` otherwise.
-	///
-	@discardableResult public func cancel() -> Bool
+	func taskFailed(with error: URLSession.JSONDataTaskError)
 	{
-		guard let task = task else {
-			return false
+
+	}
+
+	///
+	/// Called if request succeeds.
+	///
+	func taskCompleted(with data: URLSession.JSONData)
+	{
+
+	}
+
+	///
+	/// Factory for request task.
+	///
+	fileprivate func constructTask() -> URLSessionDataTask?
+	{
+		guard let location = taskLocation else {
+			return nil
 		}
 
-		guard task.state == .running else {
-			print("Task is not running")
-
-			return false
+		let taskd = try? URLSession.shared.JSONDataTask(with: location) { [weak self] (result) in
+			switch result {
+				case .failure(let error):
+					self?.taskFailed(with: error)
+				case .success(let data):
+					self?.taskCompleted(with: data)
+			}
 		}
 
-		task.cancel()
-
-		print("Cancelled task: \(task)")
-
-		return true
+		return taskd
 	}
 }
