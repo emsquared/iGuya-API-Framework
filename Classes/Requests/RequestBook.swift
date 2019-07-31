@@ -97,23 +97,13 @@ final class RequestBook : RequestJSON<Book>
 
 		Example:
 		```
-		"chapters": {
-			"1": {
-				"volume": "1",
-				"title": "I Want to be Invited to a Movie",
-				"folder": "0001_9rr4clfz",
-				"groups": {
-					...
-				}
-				...
-			"2": {
-				"volume": "1",
-				"title": "I Want to Play Old Maid",
-				"folder": "0002_nih78b9p",
-				"groups": {
-					...
-				}
-				...
+		{
+			"slug": "Kaguya-Wants-To-Be-Confessed-To",
+			"title": "Kaguya Wants To Be Confessed To",
+			"description": ...
+			"author": "Aka Akasaka",
+			"artist": "Aka Akasaka",
+			...
 		```
 	*/
 	fileprivate func processBook(in data: JSONData) throws -> Book
