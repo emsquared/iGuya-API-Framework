@@ -35,7 +35,6 @@
  *********************************************************************** */
 
 import Foundation
-import os.log
 
 ///
 /// `RequestJSON` is a specialized generic subclass of `Request` which is

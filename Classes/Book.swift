@@ -112,7 +112,8 @@ public typealias Books = [Book]
 /// When the buffer is full, we can then create an instance of
 /// `Book` by calling the `copy()` function.
 ///
-final class BookMutable {
+final class BookMutable
+{
 	var identifier: String?
 	var title: String?
 	var author: String?
