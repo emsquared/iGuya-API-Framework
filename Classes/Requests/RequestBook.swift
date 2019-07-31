@@ -48,7 +48,7 @@ final class RequestBook : RequestJSON<Book>
 
 	init? (_ named: String, _ completionHandler: @escaping CompletionHandler)
 	{
-		guard named.matches(#"^([\w-]+)$"#) else {
+		guard named.isBookIdentifier else {
 			return nil
 		}
 

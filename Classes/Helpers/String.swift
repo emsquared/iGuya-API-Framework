@@ -37,10 +37,10 @@
 extension String
 {
 	@inlinable
-    func matches(_ expression: String) -> Bool
+	func matches(_ expression: String) -> Bool
 	{
-        return range(of: expression, options: .regularExpression, range: nil, locale: nil) != nil
-    }
+		return range(of: expression, options: .regularExpression, range: nil, locale: nil) != nil
+	}
 
 	@inlinable
 	func compareAsDouble(_ other: String, _ comparator: (Double, Double) -> Bool) -> Bool
@@ -51,5 +51,11 @@ extension String
 		}
 
 		return comparator(value1, value2)
+	}
+
+	@inlinable
+	var isBookIdentifier: Bool
+	{
+		return matches(#"^([\w-]+)$"#)
 	}
 }
