@@ -34,12 +34,13 @@
  *
  *********************************************************************** */
 
+import Foundation
 import Dispatch
 
 ///
 /// `Group` represents a specific scanlator group.
 ///
-final public class Group : Comparable, CustomStringConvertible
+final public class Group : Codable, Comparable, CustomStringConvertible
 {
 	///
 	/// The identifier used by the remote API

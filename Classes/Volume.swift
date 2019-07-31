@@ -37,7 +37,7 @@
 ///
 /// `Volume` represents a specific volume in `book`
 ///
-final public class Volume : Comparable, CustomStringConvertible
+final public class Volume : Codable, Comparable, CustomStringConvertible
 {
 	///
 	/// The book the volume belongs to.

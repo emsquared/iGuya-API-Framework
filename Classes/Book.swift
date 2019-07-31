@@ -39,7 +39,7 @@ import Foundation
 ///
 /// `Book` represents a specific manga.
 ///
-final public class Book : Comparable, CustomStringConvertible
+final public class Book : Codable, Comparable, CustomStringConvertible
 {
 	///
 	/// The identifier used by the remote API

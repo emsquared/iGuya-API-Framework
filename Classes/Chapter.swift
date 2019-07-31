@@ -39,7 +39,7 @@ import Foundation
 ///
 /// `Chapter` represents a specific chapter in `volume`
 ///
-final public class Chapter : Comparable, CustomStringConvertible
+final public class Chapter : Codable, Comparable, CustomStringConvertible
 {
 	///
 	/// The volume the chapter belongs to.
@@ -62,7 +62,7 @@ final public class Chapter : Comparable, CustomStringConvertible
 	/// And one from a JP -> EN group.
 	/// `Release` represents a specific release.
 	///
-	public struct Release : Comparable, CustomStringConvertible {
+	public struct Release : Codable, Comparable, CustomStringConvertible {
 		///
 		/// The group that created the release.
 		///
