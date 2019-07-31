@@ -41,7 +41,7 @@ final class RequestBook : RequestJSON<Book>
 {
 	override var taskLocation: String?
 	{
-		return "https://guya.moe/api/series/\(identifier)/"
+		return "https://ka.guya.moe/api/series/\(identifier)/"
 	}
 
 	fileprivate(set) var identifier: String
