@@ -2,16 +2,14 @@
 import Foundation
 import iGuyaAPI
 
-var request: Request?
+var request: Request<Book>?
 
-request = iGuyaAPI.Request(getAllGroups: { (result) in
+request = iGuyaAPI.Gateway.getBook("Kaguya-Wants-To-Be-Confessed-To", { (result) in
 	switch result {
 		case .failure(let error):
 			print("Failed: \(error)")
 		case .success(let data):
-			for group in data {
-				print("ID: \(group.identifier); Name: \(group.name)")
-			}
+			print("Success: \(data)")
 	}
 
 	request = nil
