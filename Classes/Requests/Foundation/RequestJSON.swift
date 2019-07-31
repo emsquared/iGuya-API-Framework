@@ -84,4 +84,41 @@ class RequestJSON<RequestType> : Request<RequestType>
 
 		taskCompleted(with: json)
 	}
+
+	///
+	/// Returns object of type `<T>` from key in data.
+	///
+	/// If the object does not exist or cannot be cast to type,
+	/// then throws exception.
+	///
+	/// - Parameter named: Key of the object.
+	/// - Parameter data: Collection in which object resides.
+	///
+	func object<T>(named: String, in data: JSONData) throws -> T
+	{
+		if let value = data[named] as? T {
+			return value
+		}
+
+		os_log("'%@' is missing or in incorrect format.",
+			   log: Logging.Subsystem.general, type: .fault, named)
+
+		throw Failure.dataMalformed
+	}
+
+	///
+	/// Returns object of type `String` from key in data.
+	///
+	/// If the object does not exist or cannot be cast to `String`,
+	/// then throws exception.
+	///
+	/// - Parameter named: Key of the object.
+	/// - Parameter data: Collection in which object resides.
+	///
+	/// - SeeAlso: object(named:, in:)
+	///
+	func string(named: String, in data: JSONData) throws -> String
+	{
+		return try object(named: named, in: data)
+	}
 }

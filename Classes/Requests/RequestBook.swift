@@ -70,43 +70,6 @@ final class RequestBook : RequestJSON<Book>
 	}
 
 	///
-	/// Returns object of type `<T>` from key in data.
-	///
-	/// If the object does not exist or cannot be cast to type,
-	/// then throws exception.
-	///
-	/// - Parameter named: Key of the object.
-	/// - Parameter data: Collection in which object resides.
-	///
-	fileprivate func object<T>(named: String, in data: JSONData) throws -> T
-	{
-		if let value = data[named] as? T {
-			return value
-		}
-
-		os_log("'%@' is missing or in incorrect format.",
-			   log: Logging.Subsystem.general, type: .fault, named)
-
-		throw Failure.dataMalformed
-	}
-
-	///
-	/// Returns object of type `String` from key in data.
-	///
-	/// If the object does not exist or cannot be cast to `String`,
-	/// then throws exception.
-	///
-	/// - Parameter named: Key of the object.
-	/// - Parameter data: Collection in which object resides.
-	///
-	/// - SeeAlso: object(named:, in:)
-	///
-	fileprivate func string(named: String, in data: JSONData) throws -> String
-	{
-		return try object(named: named, in: data)
-	}
-
-	///
 	/// Called if request succeeds.
 	///
 	override func taskCompleted(with data: JSONData)
@@ -169,7 +132,10 @@ final class RequestBook : RequestJSON<Book>
 		let artist 			= try string(named: "artist", in: data)
 
 		let cover 			= try string(named: "cover", in: data)
-		let coverURL		= try linkify(cover: cover)
+
+		guard let coverURL = linkify(cover: cover) else {
+			throw Failure.dataMalformed
+		}
 
 		/* Parse volumes */
 		let volumes 		= try processVolumes(in: data)
@@ -344,47 +310,14 @@ final class RequestBook : RequestJSON<Book>
 		var pages: [URL] = []
 
 		for file in files {
-			let link = try linkify(release: file, in: folder, by: groupRef)
+			guard let link = linkify(release: file, in: folder, by: groupRef, identifier: identifier) else {
+				throw Failure.dataMalformed
+			}
 
 			pages.append(link)
 		}
 
 		return Chapter.Release(group: groupRef, pages: pages)
-	}
-
-	///
-	/// Create URL of the image for a cover.
-	///
-	/// - Parameter file: Filename of the cover.
-	///
-	fileprivate func linkify(cover file: String) throws -> URL
-	{
-		let link = "https://ka.guya.moe\(file)"
-
-		if let url = URL(string: link) {
-			return url
-		}
-
-		throw Failure.dataMalformed
-	}
-
-	///
-	/// Create URL of the image for a page in a release.
-	///
-	/// - Parameter file: Filename of the page.
-	/// - Parameter folder: Folder in which the page resides.
-	/// - Parameter group: The group responsible for the release.
-	///
-	fileprivate func linkify(release file: String, in folder: String, by group: Group) throws -> URL
-	{
-		let link = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"
-
-		if let url = URL(string: link) {
-			return url
-		}
-
-		/* It might be worth adding an error specifically for this? */
-		throw Failure.dataMalformed
 	}
 
 	/**
@@ -413,4 +346,3 @@ final class RequestBook : RequestJSON<Book>
 		}
 	}
 }
-
