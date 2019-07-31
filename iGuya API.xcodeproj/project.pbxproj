@@ -18,6 +18,7 @@
 		4C02C5D022F1213600BF879F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5CF22F1213600BF879F /* String.swift */; };
 		4C02C5D822F1243000BF879F /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5D722F1243000BF879F /* Gateway.swift */; };
 		4C330EF522F21D7200FC1608 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C330EF422F21D7200FC1608 /* Links.swift */; };
+		4C330EF722F21D8900FC1608 /* RequestBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C330EF622F21D8900FC1608 /* RequestBooks.swift */; };
 		4C34084722E579810029654D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084622E579810029654D /* Group.swift */; };
 		4C5FA13922E6870E000FA1FC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C5FA13822E6870E000FA1FC /* LICENSE.txt */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		4C02C5CF22F1213600BF879F /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4C02C5D722F1243000BF879F /* Gateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		4C330EF422F21D7200FC1608 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
+		4C330EF622F21D8900FC1608 /* RequestBooks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBooks.swift; sourceTree = "<group>"; };
 		4C34082E22E5761F0029654D /* iGuyaAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iGuyaAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C34084222E577050029654D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C34084422E577100029654D /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Foundation Debug.xcconfig"; path = "Configurations/Foundation Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -135,6 +137,7 @@
 			children = (
 				4C02C5C822F120D900BF879F /* Foundation */,
 				4C02C5CD22F1212000BF879F /* RequestBook.swift */,
+				4C330EF622F21D8900FC1608 /* RequestBooks.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				4C02C5B922F11FA600BF879F /* Logging.swift in Sources */,
 				4C02C5B222F11F6800BF879F /* Generics.swift in Sources */,
 				4C02C5D822F1243000BF879F /* Gateway.swift in Sources */,
+				4C330EF722F21D8900FC1608 /* RequestBooks.swift in Sources */,
 				4C330EF522F21D7200FC1608 /* Links.swift in Sources */,
 				4C02C5CE22F1212000BF879F /* RequestBook.swift in Sources */,
 				4C02C5AF22F11F5800BF879F /* Chapter.swift in Sources */,

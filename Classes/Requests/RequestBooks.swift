@@ -1,0 +1,181 @@
+/* *********************************************************************
+ *                   _  _____
+ *                  (_)/ ____|
+ *                   _| |  __ _   _ _   _  __ _
+ *                  | | | |_ | | | | | | |/ _` |
+ *                  | | |__| | |_| | |_| | (_| |
+ *                  |_|\_____|\__,_|\__, |\__,_|
+ *                                   __/ |
+ *                                  |___/
+ *
+ *               Copyright (c) 2019 Michael Morris
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *********************************************************************** */
+
+import Foundation
+import os.log
+
+///
+/// `RequestBooks` requests all books one by one (serially).
+///
+/// If one book fails to download, then that is considered a failure
+/// and anything already downloaded and requests pending are discarded.
+///
+final class RequestBooks : RequestJSON<Books>
+{
+	override var taskLocation: String?
+	{
+		return "https://ka.guya.moe/api/get_all_series/"
+	}
+
+	fileprivate var books: Books = []
+	fileprivate var bookRequests: [String : Request<Book>] = [:]
+
+	///
+	/// `Structures` defines the layout of objects in the JSON payload.
+	///
+	fileprivate struct Structures
+	{
+		typealias Book = [String : Any]
+		typealias Books = [String : Book]
+	}
+
+	///
+	/// Called if one or more requests failed so that internal
+	/// state can be cleaned up. Requests are all or not so if
+	/// one fails then everything is discarded.
+	///
+	fileprivate func reset()
+	{
+		bookRequests.forEach { $1.cancel() }
+
+		bookRequests.removeAll()
+
+		books.removeAll()
+	}
+
+	///
+	/// Called if request succeeds.
+	///
+	override func taskCompleted(with data: JSONData) throws
+	{
+		try processBooks(in: data)
+	}
+
+	/**
+		Parse object for a list of books.
+
+		Example:
+		```
+		"Kaguya Wants To Be Confessed To": {
+			"author": "Aka Akasaka",
+			"artist": "Aka Akasaka",
+			"description":
+			...
+		"Kaguya Wants To Be Confessed To Official Doujin": {
+			"author": "Sakayama Shinta",
+			"artist": "Sakayama Shinta",
+			"description"
+			...
+		```
+	*/
+	fileprivate func processBooks(in data: JSONData) throws
+	{
+		for (_, details) in data {
+			guard let book = details as? Structures.Book else {
+				throw Failure.dataMalformed
+			}
+
+			try processBook(book)
+		}
+
+		startNextBookRequest()
+	}
+
+	fileprivate func processBook(_ book: Structures.Book) throws
+	{
+		let identifier = try string(named: "slug", in: book)
+
+		try createBookRequest(for: identifier)
+	}
+
+	fileprivate func createBookRequest(for book: String) throws
+	{
+		guard let request = RequestBook(book, { [weak self] (result) in
+			self?.bookRequestFinished(with: result)
+		}) else {
+			os_log("Failed to create request for book '%@'",
+				   log: Logging.Subsystem.general, type: .fault, book)
+
+			throw Failure.otherError()
+		}
+
+		bookRequests[book] = request
+	}
+
+	///
+	/// Start next request for books or finalize the request
+	/// if there are no more requests to be made.
+	///
+	/// Requests are processed serially to avoid burden of
+	/// setting up a queue to prevent race conditions.
+	///
+	fileprivate func startNextBookRequest()
+	{
+		if let (_, request) = bookRequests.first {
+			request.start()
+
+			return
+		}
+
+		finalize(with: books)
+	}
+
+	fileprivate func bookRequestFinished(with result: Result<Book, Failure>)
+	{
+		switch (result) {
+			case .failure(let error):
+				bookRequestFailed(with: error)
+			case .success(let book):
+				bookRequestCompleted(for: book)
+
+				startNextBookRequest()
+		}
+	}
+
+	fileprivate func bookRequestFailed(with error: Failure)
+	{
+		reset() // Reset internal state
+
+		finalize(with: error)
+	}
+
+	fileprivate func bookRequestCompleted(for book: Book)
+	{
+		bookRequests.removeValue(forKey: book.identifier)
+
+		books.append(book)
+	}
+}

@@ -42,4 +42,11 @@ public class Gateway
 
 		return request
 	}
+
+	public static func getBooks(_ completionHandler: @escaping Request<Books>.CompletionHandler) -> Request<Books>
+	{
+		let request = RequestBooks(with: completionHandler)
+
+		return request
+	}
 }
