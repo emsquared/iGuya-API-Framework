@@ -15,6 +15,8 @@
 		4C02C5B922F11FA600BF879F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5B822F11FA600BF879F /* Logging.swift */; };
 		4C02C5CB22F120D900BF879F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5C922F120D900BF879F /* Request.swift */; };
 		4C02C5CC22F120D900BF879F /* RequestJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5CA22F120D900BF879F /* RequestJSON.swift */; };
+		4C02C5CE22F1212000BF879F /* RequestBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5CD22F1212000BF879F /* RequestBook.swift */; };
+		4C02C5D022F1213600BF879F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C5CF22F1213600BF879F /* String.swift */; };
 		4C13D47C22E6909400899DCA /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C13D47B22E6909400899DCA /* Dictionary.swift */; };
 		4C34084722E579810029654D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084622E579810029654D /* Group.swift */; };
 		4C5FA13922E6870E000FA1FC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C5FA13822E6870E000FA1FC /* LICENSE.txt */; };
@@ -29,6 +31,8 @@
 		4C02C5B822F11FA600BF879F /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		4C02C5C922F120D900BF879F /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		4C02C5CA22F120D900BF879F /* RequestJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestJSON.swift; sourceTree = "<group>"; };
+		4C02C5CD22F1212000BF879F /* RequestBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBook.swift; sourceTree = "<group>"; };
+		4C02C5CF22F1213600BF879F /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4C13D47B22E6909400899DCA /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		4C34082E22E5761F0029654D /* iGuyaAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iGuyaAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C34084222E577050029654D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,11 +111,11 @@
 		4C34084922E57A3E0029654D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4C859DB422E6B4C900E85A29 /* Requests */,
 				4CC74E2022E61C070084F3F4 /* Helpers */,
-				4C34084622E579810029654D /* Group.swift */,
+				4C859DB422E6B4C900E85A29 /* Requests */,
 				4C02C5AA22F11F5800BF879F /* Book.swift */,
 				4C02C5AC22F11F5800BF879F /* Chapter.swift */,
+				4C34084622E579810029654D /* Group.swift */,
 				4C02C5AB22F11F5800BF879F /* Volume.swift */,
 			);
 			path = Classes;
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				4C02C5C822F120D900BF879F /* Foundation */,
+				4C02C5CD22F1212000BF879F /* RequestBook.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 				4C02C5B022F11F6800BF879F /* Generics.swift */,
 				4C02C5B122F11F6800BF879F /* JSON.swift */,
 				4C02C5B822F11FA600BF879F /* Logging.swift */,
+				4C02C5CF22F1213600BF879F /* String.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -236,7 +242,9 @@
 				4C02C5CC22F120D900BF879F /* RequestJSON.swift in Sources */,
 				4C02C5B922F11FA600BF879F /* Logging.swift in Sources */,
 				4C02C5B222F11F6800BF879F /* Generics.swift in Sources */,
+				4C02C5CE22F1212000BF879F /* RequestBook.swift in Sources */,
 				4C02C5AF22F11F5800BF879F /* Chapter.swift in Sources */,
+				4C02C5D022F1213600BF879F /* String.swift in Sources */,
 				4C02C5B322F11F6800BF879F /* JSON.swift in Sources */,
 				4C13D47C22E6909400899DCA /* Dictionary.swift in Sources */,
 				4C34084722E579810029654D /* Group.swift in Sources */,
