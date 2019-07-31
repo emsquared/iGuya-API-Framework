@@ -51,12 +51,19 @@ public class Request<ResultType>
 	///
 	/// Errors thrown by `Request`.
 	///
-	/// Subclasses may extend this enum.
-	/// See the documentation for those.
-	///
 	public enum Failure : Error
 	{
-		case unimplemented // placeholder
+		///
+		/// Data received from endpoint is in a form which
+		/// is not expected or cannot be handled.
+		///
+		case dataMalformed
+
+		///
+		/// Error received from a lower level API which
+		/// is being rethrown as a wrapped by `Failure`.
+		///
+		case rethrow(_ error: Error)
 	}
 
 	///

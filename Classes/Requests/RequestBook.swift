@@ -87,7 +87,7 @@ final class RequestBook : RequestJSON<Book>
 		os_log("'%@' is missing or in incorrect format.",
 			   log: Logging.Subsystem.general, type: .fault, named)
 
-		throw Failure.unimplemented
+		throw Failure.dataMalformed
 	}
 
 	///
@@ -118,19 +118,14 @@ final class RequestBook : RequestJSON<Book>
 
 		/* Catch errors from our own framework. */
 		} catch let error as Failure {
-			os_log("Error caught: %@",
-				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
-
-			completionHandler(.failure(.unimplemented))
+			completionHandler(.failure(error))
 
 		/* Catch all other errors. */
 		} catch let error {
-			/* TODO: Add a case for non-Failure errors to wrap them. */
-
 			os_log("Unusual error caught: %@",
 				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
-			completionHandler(.failure(.unimplemented))
+			completionHandler(.failure(.rethrow(error)))
 		}
 	}
 
@@ -343,7 +338,7 @@ final class RequestBook : RequestJSON<Book>
 			os_log("Group '%{public}ld' has a release but isn't identified.",
 				   log: Logging.Subsystem.general, type: .fault, group)
 
-			throw Failure.unimplemented
+			throw Failure.dataMalformed
 		}
 
 		var pages: [URL] = []
@@ -370,7 +365,7 @@ final class RequestBook : RequestJSON<Book>
 			return url
 		}
 
-		throw Failure.unimplemented
+		throw Failure.dataMalformed
 	}
 
 	///
@@ -388,7 +383,8 @@ final class RequestBook : RequestJSON<Book>
 			return url
 		}
 
-		throw Failure.unimplemented
+		/* It might be worth adding an error specifically for this? */
+		throw Failure.dataMalformed
 	}
 
 	/**
@@ -422,7 +418,7 @@ final class RequestBook : RequestJSON<Book>
 	///
 	override func taskFailed(with error: URLSession.JSONDataTaskError)
 	{
-		completionHandler(.failure(.unimplemented))
+		completionHandler(.failure(.rethrow(error)))
 	}
 }
 
