@@ -35,6 +35,7 @@
  *********************************************************************** */
 
 import Foundation
+import os.log
 
 ///
 /// `RequestJSON` is a specialized generic subclass of `Request` which is
@@ -129,6 +130,9 @@ class RequestJSON<RequestType> : Request<RequestType>
 		let taskd = try? URLSession.shared.JSONDataTask(with: location) { [weak self] (result) in
 			switch result {
 				case .failure(let error):
+					os_log("Request failed with error: %{public}@",
+						   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
+
 					self?.taskFailed(with: error)
 				case .success(let data):
 					self?.taskCompleted(with: data)
