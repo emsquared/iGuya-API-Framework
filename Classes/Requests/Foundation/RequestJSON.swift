@@ -46,99 +46,42 @@ import os.log
 class RequestJSON<RequestType> : Request<RequestType>
 {
 	///
-	/// Task that the request hosts.
+	/// Structure of data returned by `RequestJSON`.
 	///
-	fileprivate var task: URLSessionDataTask?
+	typealias JSONData = [String : Any]
 
 	///
-	/// The remote address (URL) of the endpoint for the request.
+	/// Called if decoding the JSON data succeeds.
 	///
-	/// Subclasses of `RequestJSON` do not currently require arguments
-	/// to be passed to the location. If a time comes that is needed,
-	/// then we could add an additional property for returning a
-	/// formatted `NSURLRequest`.
-	///
-	var taskLocation: String?
+	func taskCompleted(with data: JSONData)
 	{
-		return nil
+
 	}
 
-	/* Task is discarded when `Request` is no longer in use. */
-	deinit
+	///
+	/// Called if the request succeeds.
+	///
+	override func taskCompleted(with data: Data)
 	{
-		task = nil
-	}
+		var jsonObject: Any
 
-	@discardableResult public override func start() -> Bool
-	{
-		var taskRef = task
+		do {
+			jsonObject = try JSONSerialization.jsonObject(with: data)
+		} catch let decodeError {
+			os_log("Decode failed with error: %@",
+				   log: Logging.Subsystem.general, type: .error, decodeError.localizedDescription)
 
-		if (taskRef == nil) {
-			taskRef = constructTask()
+			finalize(with: .otherError(decodeError))
+
+			return
 		}
 
-		/* Another nil check is not needed because
-		 the state will never be suspended if we
-		 have a nil task returned by constructor. */
-		guard taskRef?.state == .suspended else {
-			return false
+		guard let json = jsonObject as? JSONData else {
+			finalize(with: .dataMalformed)
+
+			return
 		}
 
-		taskRef?.resume()
-
-		return true
-	}
-
-	@discardableResult public override func cancel() -> Bool
-	{
-		let taskRef = task
-
-		guard taskRef?.state == .running else {
-			return false
-		}
-
-		taskRef?.cancel()
-
-		return true
-	}
-
-	///
-	/// Called if request fails.
-	///
-	func taskFailed(with error: URLSession.JSONDataTaskError)
-	{
-
-	}
-
-	///
-	/// Called if request succeeds.
-	///
-	func taskCompleted(with data: URLSession.JSONData)
-	{
-
-	}
-
-	///
-	/// Factory for request task.
-	///
-	fileprivate func constructTask() -> URLSessionDataTask?
-	{
-		guard let location = taskLocation else {
-			return nil
-		}
-
-		let taskd = try? URLSession.shared.JSONDataTask(with: location) { [weak self] (result) in
-			switch result {
-				case .failure(let error):
-					os_log("Request failed with error: %{public}@",
-						   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
-
-					self?.taskFailed(with: error)
-				case .success(let data):
-					self?.taskCompleted(with: data)
-			}
-		}
-
-		return taskd
+		taskCompleted(with: json)
 	}
 }

@@ -78,7 +78,7 @@ final class RequestBook : RequestJSON<Book>
 	/// - Parameter named: Key of the object.
 	/// - Parameter data: Collection in which object resides.
 	///
-	fileprivate func object<T>(named: String, in data: URLSession.JSONData) throws -> T
+	fileprivate func object<T>(named: String, in data: JSONData) throws -> T
 	{
 		if let value = data[named] as? T {
 			return value
@@ -101,7 +101,7 @@ final class RequestBook : RequestJSON<Book>
 	///
 	/// - SeeAlso: object(named:, in:)
 	///
-	fileprivate func string(named: String, in data: URLSession.JSONData) throws -> String
+	fileprivate func string(named: String, in data: JSONData) throws -> String
 	{
 		return try object(named: named, in: data)
 	}
@@ -109,23 +109,23 @@ final class RequestBook : RequestJSON<Book>
 	///
 	/// Called if request succeeds.
 	///
-	override func taskCompleted(with data: URLSession.JSONData)
+	override func taskCompleted(with data: JSONData)
 	{
 		do {
 			let book = try processBook(in: data)
 
-			completionHandler(.success(book))
+			finalize(with: book)
 
 		/* Catch errors from our own framework. */
 		} catch let error as Failure {
-			completionHandler(.failure(error))
+			finalize(with: error)
 
 		/* Catch all other errors. */
 		} catch let error {
 			os_log("Unusual error caught: %@",
 				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
-			completionHandler(.failure(.rethrow(error)))
+			taskFailed(with: error)
 		}
 	}
 
@@ -153,7 +153,7 @@ final class RequestBook : RequestJSON<Book>
 				...
 		```
 	*/
-	fileprivate func processBook(in data: URLSession.JSONData) throws -> Book
+	fileprivate func processBook(in data: JSONData) throws -> Book
 	{
 		/* It is critical that groups are preloaded before parsing
 		 other data otherwise the groups wont exist when other
@@ -212,7 +212,7 @@ final class RequestBook : RequestJSON<Book>
 				...
 		```
 	*/
-	fileprivate func processVolumes(in data: URLSession.JSONData) throws -> Volumes
+	fileprivate func processVolumes(in data: JSONData) throws -> Volumes
 	{
 		let chapters: Structures.Chapters = try object(named: "chapters", in: data)
 
@@ -303,7 +303,7 @@ final class RequestBook : RequestJSON<Book>
 				...
 		```
 	*/
-	fileprivate func processReleases(in data: URLSession.JSONData, folder: String) throws -> Chapter.Releases
+	fileprivate func processReleases(in data: JSONData, folder: String) throws -> Chapter.Releases
 	{
 		let releases: Structures.Releases = try object(named: "groups", in: data)
 
@@ -401,7 +401,7 @@ final class RequestBook : RequestJSON<Book>
 		}
 		```
 	*/
-	fileprivate func preloadGroups(in data: URLSession.JSONData) throws
+	fileprivate func preloadGroups(in data: JSONData) throws
 	{
 		let groups: Structures.Groups = try object(named: "groups", in: data)
 
@@ -411,14 +411,6 @@ final class RequestBook : RequestJSON<Book>
 			os_log("Preloading group: (%{public}ld: '%{public}@')",
 				   log: Logging.Subsystem.general, type: .debug, identifier, name)
 		}
-	}
-
-	///
-	/// Called if request fails.
-	///
-	override func taskFailed(with error: URLSession.JSONDataTaskError)
-	{
-		completionHandler(.failure(.rethrow(error)))
 	}
 }
 
