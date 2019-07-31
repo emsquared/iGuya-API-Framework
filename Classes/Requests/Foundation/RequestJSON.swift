@@ -53,7 +53,7 @@ class RequestJSON<RequestType> : Request<RequestType>
 	///
 	/// Called if decoding the JSON data succeeds.
 	///
-	func taskCompleted(with data: JSONData)
+	func taskCompleted(with data: JSONData) throws
 	{
 
 	}
@@ -61,7 +61,7 @@ class RequestJSON<RequestType> : Request<RequestType>
 	///
 	/// Called if the request succeeds.
 	///
-	override func taskCompleted(with data: Data)
+	override func taskCompleted(with data: Data) throws
 	{
 		var jsonObject: Any
 
@@ -82,7 +82,7 @@ class RequestJSON<RequestType> : Request<RequestType>
 			return
 		}
 
-		taskCompleted(with: json)
+		try taskCompleted(with: json)
 	}
 
 	///

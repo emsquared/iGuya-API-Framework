@@ -72,24 +72,11 @@ final class RequestBook : RequestJSON<Book>
 	///
 	/// Called if request succeeds.
 	///
-	override func taskCompleted(with data: JSONData)
+	override func taskCompleted(with data: JSONData) throws
 	{
-		do {
-			let book = try processBook(in: data)
+		let book = try processBook(in: data)
 
-			finalize(with: book)
-
-		/* Catch errors from our own framework. */
-		} catch let error as Failure {
-			finalize(with: error)
-
-		/* Catch all other errors. */
-		} catch let error {
-			os_log("Unusual error caught: %@",
-				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
-
-			taskFailed(with: error)
-		}
+		finalize(with: book)
 	}
 
 	/**

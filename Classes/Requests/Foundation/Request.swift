@@ -49,7 +49,7 @@ public class Request<ResultType>
 	///
 	/// Errors thrown by `Request`.
 	///
-	public enum Failure : Error
+	public enum _Failure : Error
 	{
 		///
 		/// Data received from endpoint is in a form which
@@ -77,11 +77,12 @@ public class Request<ResultType>
 		case sessionError(_ error: Error)
 
 		///
-		/// Error received from a lower level API which
-		/// is being rethrown as a wrapped by `Failure`.
+		/// Error which cannot be described by other cases.
 		///
-		case otherError(_ error: Error)
+		case otherError(_ error: Error? = nil)
 	}
+
+	public typealias Failure = Request<Any>._Failure
 
 	///
 	/// Completion handler that is called when the request finishes.
@@ -214,24 +215,29 @@ public class Request<ResultType>
 				return
 			}
 
-			self?.taskCompleted(with: data)
+			do {
+				try self?.taskCompleted(with: data)
+
+			/* Catch errors from our own framework. */
+			} catch let error as Failure {
+				self?.finalize(with: error)
+
+			/* Catch all other errors. */
+			} catch let error {
+				os_log("Unusual error caught: %@",
+					   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
+
+				self?.finalize(with: .otherError(error))
+			}
 		} // sessionTask
 
 		return sessionTask
 	}
 
 	///
-	/// Called if the request fails.
-	///
-	func taskFailed(with error: Error)
-	{
-		completionHandler(.failure(.otherError(error)))
-	}
-
-	///
 	/// Called if the request succeeds.
 	///
-	func taskCompleted(with data: Data)
+	func taskCompleted(with data: Data) throws
 	{
 
 	}
