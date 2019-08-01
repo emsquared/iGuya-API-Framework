@@ -59,11 +59,7 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	/// All releases for the chapter.
 	///
-	public fileprivate(set) var releases: Releases {
-		willSet (releases) {
-			releases.forEach { $0.assignChapter(self) }
-		}
-	}
+	public fileprivate(set) var releases: Releases
 
 	///
 	/// Create a new instance of `Volume`.
@@ -73,7 +69,18 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 		self.volume = volume
 		self.number = number
 		self.title = title
-		self.releases = releases.sorted(by: <)
+		self.releases = releases
+
+		finalizeProperties()
+	}
+
+	///
+	/// Perform last second cleanup of properties during `init()`.
+	///
+	fileprivate func finalizeProperties()
+	{
+		releases.sort(by: <)
+		releases.forEach { $0.assignChapter(self) }
 	}
 
 	///
@@ -83,8 +90,7 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	/// This function only assigns the volume if none is set.
 	///
-	/// This function is automatically called by the `willSet`
-	/// handler for the `chapters` property in `Volume`.
+	/// This function is automatically called.
 	/// There is no need to call it directly.
 	///
 	/// - Parameter volume: The volume the chapter belongs to.
@@ -158,11 +164,7 @@ public extension Chapter
 		///
 		/// List of pages, in order, for the release.
 		///
-		public fileprivate(set) var pages: Pages {
-		   willSet (pages) {
-			   pages.forEach { $0.assignRelease(self) }
-		   }
-	   }
+		public fileprivate(set) var pages: Pages
 
 		///
 		/// Create a new instance of `Volume`.
@@ -172,6 +174,17 @@ public extension Chapter
 			self.chapter = chapter
 			self.group = group
 			self.pages = pages
+
+			finalizeProperties()
+		}
+
+		///
+		/// Perform last second cleanup of properties during `init()`.
+		///
+		fileprivate func finalizeProperties()
+		{
+			pages.forEach { $0.assignRelease(self) }
+			pages.sort(by: <)
 		}
 
 		///
@@ -181,8 +194,7 @@ public extension Chapter
 		///
 		/// This function only assigns the release if none is set.
 		///
-		/// This function is automatically called by the `willSet`
-		/// handler for the `releases` property in `Chapter`.
+		/// This function is automatically called.
 		/// There is no need to call it directly.
 		///
 		/// - Parameter chapter: The chapter the release belongs to.
@@ -276,8 +288,7 @@ public extension Chapter.Release
 		///
 		/// This function only assigns the release if none is set.
 		///
-		/// This function is automatically called by the `willSet`
-		/// handler for the `pages` property in `Release`.
+		/// This function is automatically called.
 		/// There is no need to call it directly.
 		///
 		/// - Parameter release: The release the page belongs to.

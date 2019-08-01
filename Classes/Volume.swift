@@ -54,11 +54,7 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	///
 	/// Chapters the volume contains.
 	///
-	public fileprivate(set) var chapters: Chapters {
-		willSet (chapters) {
-			chapters.forEach { $0.assignVolume(self) }
-		}
-	}
+	public fileprivate(set) var chapters: Chapters
 
 	///
 	/// Create a new instance of `Volume`.
@@ -67,7 +63,18 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	{
 		self.book = book
 		self.number = number
-		self.chapters = chapters.sorted(by: <)
+		self.chapters = chapters
+
+		finalizeProperties()
+	}
+
+	///
+	/// Perform last second cleanup of properties during `init()`.
+	///
+	fileprivate func finalizeProperties()
+	{
+		chapters.sort(by: <)
+		chapters.forEach { $0.assignVolume(self) }
 	}
 
 	///
@@ -77,8 +84,7 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	///
 	/// This function only assigns the book if none is set.
 	///
-	/// This function is automatically called by the `willSet`
-	/// handler for the `volumes` property in `Book`.
+	/// This function is automatically called.
 	/// There is no need to call it directly.
 	///
 	/// - Parameter book: The book the volume belongs to.

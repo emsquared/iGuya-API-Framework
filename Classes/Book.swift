@@ -81,11 +81,7 @@ final public class Book : Codable, Comparable, CustomStringConvertible
 	/// volume, they are still stored within a `Volume`.
 	/// The `Volume` for ongoing chapters have a nil `number`.
 	///
-	public fileprivate(set) var volumes: Volumes {
-		willSet (volumes) {
-			volumes.forEach { $0.assignBook(self) }
-		}
-	}
+	public fileprivate(set) var volumes: Volumes
 
 	///
 	/// String representation of `Book`.
@@ -117,7 +113,18 @@ final public class Book : Codable, Comparable, CustomStringConvertible
 		artist 			= try assignOrThrow(mutableBook.artist)
 		summary 		= try assignOrThrow(mutableBook.summary)
 		cover 			= try assignOrThrow(mutableBook.cover)
-		volumes 		= try assignOrThrow(mutableBook.volumes).sorted(by: <)
+		volumes 		= try assignOrThrow(mutableBook.volumes)
+
+		finalizeProperties()
+	}
+
+	///
+	/// Perform last second cleanup of properties during `init()`.
+	///
+	fileprivate func finalizeProperties()
+	{
+		volumes.forEach { $0.assignBook(self) }
+		volumes.sort(by: <)
 	}
 
 	///
