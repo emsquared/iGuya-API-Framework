@@ -116,10 +116,7 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	public static func < (lhs: Chapter, rhs: Chapter) -> Bool
 	{
-		let number1 = lhs.number
-		let number2 = rhs.number
-
-		return number1.compareAsDouble(number2, <)
+		return lhs.number.compareAsDouble(rhs.number, <)
 	}
 
 	///

@@ -109,10 +109,7 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	///
 	public static func < (lhs: Volume, rhs: Volume) -> Bool
 	{
-		let number1 = lhs.number
-		let number2 = rhs.number
-
-		return number1.compareAsDouble(number2, <)
+		return lhs.number.compareAsDouble(rhs.number, <)
 	}
 
 	///
