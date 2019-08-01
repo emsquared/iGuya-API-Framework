@@ -62,14 +62,20 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	public fileprivate(set) var releases: Releases
 
 	///
+	/// The folder in which the pages are saved on guya.moe.
+	///
+	fileprivate var folder: String
+
+	///
 	/// Create a new instance of `Volume`.
 	///
-	init (volume: Volume?, number: String, title: String, releases: Releases)
+	init (volume: Volume?, number: String, title: String, releases: Releases, folder: String)
 	{
 		self.volume = volume
 		self.number = number
 		self.title = title
 		self.releases = releases
+		self.folder = folder
 
 		finalizeProperties()
 	}
@@ -256,6 +262,11 @@ public extension Chapter.Release
 		public fileprivate(set) weak var release: Chapter.Release?
 
 		///
+		/// The file as which the pages are saved on guya.moe.
+		///
+		fileprivate var file: String
+
+		///
 		/// The page number.
 		///
 		public fileprivate(set) var number: Int
@@ -263,13 +274,40 @@ public extension Chapter.Release
 		///
 		/// URL of full size image for the page.
 		///
-		public fileprivate(set) var page: URL
+		/// This property is computed on the fly which is why
+		/// it can return `nil`. It might not always have enough
+		/// context at the time it's called.
+		///
+		public var page: URL?
+		{
+			/* Now this is what you call chaining... */
+			guard 	let release = release,
+					let chapter = release.chapter,
+					let identifier = chapter.volume?.book?.identifier else {
+				return nil
+			}
+
+			return Linkify.release(with: file, in: chapter.folder, by: release.group, identifier: identifier)
+		}
 
 		///
 		/// URL of scaled preview image for the page.
 		///
-		public fileprivate(set) var preview: URL
+		/// This property is computed on the fly which is why
+		/// it can return `nil`. It might not always have enough
+		/// context at the time it's called.
+		///
+		public var preview: URL?
+		{
+			/* Now this is what you call chaining... */
+			guard 	let release = release,
+					let chapter = release.chapter,
+					let identifier = chapter.volume?.book?.identifier else {
+				return nil
+			}
 
+			return Linkify.preview(with: file, in: chapter.folder, by: release.group, identifier: identifier)
+		}
 		///
 		/// URL of the page onnline at guya.moe.
 		///
@@ -279,7 +317,6 @@ public extension Chapter.Release
 		///
 		public var webpage: URL?
 		{
-			/* Now this is what you call chaining... */
 			guard 	let chapter = release?.chapter,
 					let identifier = chapter.volume?.book?.identifier else {
 				return nil
@@ -291,12 +328,11 @@ public extension Chapter.Release
 		///
 		/// Create a new instance of `Volume`.
 		///
-		init (release: Chapter.Release?, number: Int, page: URL, preview: URL)
+		init (release: Chapter.Release?, number: Int, file: String)
 		{
 			self.release = release
 			self.number = number
-			self.page = page
-			self.preview = preview
+			self.file = file
 		}
 
 		///
@@ -326,8 +362,8 @@ public extension Chapter.Release
 			return """
 			Page(
 				number: '\(number)'
-				page: '\(page)'
-				preview: '\(preview)'
+				page: '\(String(describing: page))'
+				preview: '\(String(describing: preview))'
 			)
 			"""
 		}

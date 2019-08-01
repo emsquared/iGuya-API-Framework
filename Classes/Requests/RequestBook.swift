@@ -219,9 +219,9 @@ final class RequestBook : RequestJSON<Book>
 
 		let folder = try string(named: "folder", in: data)
 
-		let releases = try processReleases(in: data, folder: folder)
+		let releases = try processReleases(in: data)
 
-		return Chapter(volume: nil, number: number, title: title, releases: releases)
+		return Chapter(volume: nil, number: number, title: title, releases: releases, folder: folder)
 	}
 
 	/**
@@ -246,14 +246,14 @@ final class RequestBook : RequestJSON<Book>
 				...
 		```
 	*/
-	fileprivate func processReleases(in data: JSONData, folder: String) throws -> Chapter.Releases
+	fileprivate func processReleases(in data: JSONData) throws -> Chapter.Releases
 	{
 		let releases: Structures.Releases = try object(named: "groups", in: data)
 
 		var releasesOut: Chapter.Releases = []
 
 		for (group, files) in releases {
-			let release = try processRelease(files: files, in: folder, by: group)
+			let release = try processRelease(files: files, by: group)
 
 			releasesOut.append(release)
 		}
@@ -275,7 +275,7 @@ final class RequestBook : RequestJSON<Book>
 			...
 		```
 	*/
-	fileprivate func processRelease(files: Structures.Release, in folder: String, by group: String) throws -> Chapter.Release
+	fileprivate func processRelease(files: Structures.Release, by group: String) throws -> Chapter.Release
 	{
 		guard let groupRef = Group.group(with: group) else {
 			os_log("Group '%{public}ld' has a release but isn't identified.",
@@ -289,13 +289,9 @@ final class RequestBook : RequestJSON<Book>
 		var pages: [Page] = []
 
 		for file in files {
-			guard let links = Linkify.release(with: file, in: folder, by: groupRef, identifier: identifier) else {
-				throw Failure.dataMalformed
-			}
-
 			let number = (pages.count + 1)
 
-			let page = Page(release: nil, number: number, page: links.page, preview: links.preview)
+			let page = Page(release: nil, number: number, file: file)
 
 			pages.append(page)
 		}

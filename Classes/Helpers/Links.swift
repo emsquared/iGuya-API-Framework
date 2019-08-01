@@ -52,29 +52,35 @@ struct Linkify
 	}
 
 	///
-	/// Create URL of the image for a page in a release.
+	/// Create URL of the full size image for a page in a release.
 	///
 	/// - Parameter file: Filename of the page.
 	/// - Parameter folder: Folder in which the page resides.
 	/// - Parameter group: The group responsible for the release.
 	/// - Parameter identifier: Identifier for the book in which the page resides.
 	///
-	/// - Returns: A tuple which contains the full size page as the first argument
-	/// and the preview as the second argument.
+	@inlinable
+	static func release(with file: String, in folder: String, by group: Group, identifier: String) -> URL?
+	{
+		let link = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"
+
+		return URL(string: link)
+	}
+
+	///
+	/// Create URL of the scaled preview image for a page in a release.
+	///
+	/// - Parameter file: Filename of the page.
+	/// - Parameter folder: Folder in which the page resides.
+	/// - Parameter group: The group responsible for the release.
+	/// - Parameter identifier: Identifier for the book in which the page resides.
 	///
 	@inlinable
-	static func release(with file: String, in folder: String, by group: Group, identifier: String) -> (page: URL, preview: URL)?
+	static func preview(with file: String, in folder: String, by group: Group, identifier: String) -> URL?
 	{
-		guard
+		let link = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)_shrunk/\(file)"
 
-		let pageURL = URL(string: "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"),
-		let previewURL = URL(string: "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)_shrunk/\(file)")
-
-		else {
-				return nil
-		}
-
-		return (pageURL, previewURL)
+		return URL(string: link)
 	}
 
 	///
