@@ -78,6 +78,15 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	}
 
 	///
+	/// Override coding keys to prevent loops caused by parent references.
+	///
+    private enum CodingKeys: String, CodingKey
+	{
+        case number
+        case chapters
+    }
+
+	///
 	/// `Volume` objects are created before `Book` objects.
 	/// `assignBook()` assigns a `Book` object once it
 	/// becomes available.

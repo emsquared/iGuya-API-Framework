@@ -90,6 +90,17 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	}
 
 	///
+	/// Override coding keys to prevent loops caused by parent references.
+	///
+	private enum CodingKeys: String, CodingKey
+	{
+		case number
+		case title
+		case releases
+		case folder
+	}
+
+	///
 	/// `Chapter` objects are created before `Volume` objects.
 	/// `assignVolume()` assigns a `Volume` object once it
 	/// becomes available.
@@ -191,6 +202,15 @@ public extension Chapter
 		{
 			pages.forEach { $0.assignRelease(self) }
 			pages.sort(by: <)
+		}
+
+		///
+		/// Override coding keys to prevent loops caused by parent references.
+		///
+		private enum CodingKeys: String, CodingKey
+		{
+			case group
+			case pages
 		}
 
 		///
@@ -323,6 +343,15 @@ public extension Chapter.Release
 			}
 
 			return Linkify.share(page: number, in: chapter.number, identifier: identifier)
+		}
+
+		///
+		/// Override coding keys to prevent loops caused by parent references.
+		///
+		private enum CodingKeys: String, CodingKey
+		{
+			case file
+			case number
 		}
 
 		///
