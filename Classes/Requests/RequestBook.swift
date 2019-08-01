@@ -293,12 +293,14 @@ final class RequestBook : RequestJSON<Book>
 				throw Failure.dataMalformed
 			}
 
-			let page = Page(page: links.page, preview: links.preview)
+			let number = (pages.count + 1)
+
+			let page = Page(release: nil, number: number, page: links.page, preview: links.preview)
 
 			pages.append(page)
 		}
 
-		return Chapter.Release(group: groupRef, pages: pages)
+		return Chapter.Release(chapter: nil, group: groupRef, pages: pages)
 	}
 
 	/**

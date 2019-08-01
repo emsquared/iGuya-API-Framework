@@ -59,7 +59,11 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	/// All releases for the chapter.
 	///
-	public fileprivate(set) var releases: Releases
+	public fileprivate(set) var releases: Releases {
+		willSet (releases) {
+			releases.forEach { $0.assignChapter(self) }
+		}
+	}
 
 	///
 	/// Create a new instance of `Volume`.
@@ -142,17 +146,56 @@ public extension Chapter
 	/// And one from a JP -> EN group.
 	/// `Release` represents a specific release.
 	///
-	struct Release : Codable, Comparable, CustomStringConvertible
+	class Release : Codable, Comparable, CustomStringConvertible
 	{
+		///
+		/// The chapter the release belongs to.
+		///
+		public fileprivate(set) weak var chapter: Chapter?
+
 		///
 		/// The group that created the release.
 		///
-		public let group: Group
+		public fileprivate(set) var group: Group
 
 		///
 		/// List of pages, in order, for the release.
 		///
-		public let pages: Pages
+		public fileprivate(set) var pages: Pages {
+		   willSet (pages) {
+			   pages.forEach { $0.assignRelease(self) }
+		   }
+	   }
+
+		///
+		/// Create a new instance of `Volume`.
+		///
+		init (chapter: Chapter?, group: Group, pages: Pages)
+		{
+			self.chapter = chapter
+			self.group = group
+			self.pages = pages
+		}
+
+		///
+		/// `Release` objects are created before `Chapter` objects.
+		/// `assignChapter()` assigns a `Chapter` object once it
+		/// becomes available.
+		///
+		/// This function only assigns the release if none is set.
+		///
+		/// This function is automatically called by the `willSet`
+		/// handler for the `releases` property in `Chapter`.
+		/// There is no need to call it directly.
+		///
+		/// - Parameter chapter: The chapter the release belongs to.
+		///
+		fileprivate func assignChapter(_ chapter: Chapter)
+		{
+			if self.chapter == nil {
+				self.chapter = chapter
+			}
+		}
 
 		///
 		/// String representation of `Release`.
@@ -175,6 +218,14 @@ public extension Chapter
 		{
 			return lhs.group < rhs.group
 		}
+
+		///
+		/// Equal if both are the same reference.
+		///
+		public static func == (lhs: Release, rhs: Release) -> Bool
+		{
+			return lhs === rhs
+		}
 	}
 
 	///
@@ -188,17 +239,58 @@ public extension Chapter.Release
 	///
 	/// `Page` represents a specific page in a release.
 	///
-	struct Page : Codable, CustomStringConvertible, Equatable
+	class Page : Codable, Comparable, CustomStringConvertible
 	{
+		///
+		/// The release the page belongs to.
+		///
+		public fileprivate(set) weak var release: Chapter.Release?
+
+		///
+		/// The page number.
+		///
+		public fileprivate(set) var number: Int
+
 		///
 		/// URL of full size image for the page.
 		///
-		public let page: URL
+		public fileprivate(set) var page: URL
 
 		///
 		/// URL of scaled preview image for the page.
 		///
-		public let preview: URL
+		public fileprivate(set) var preview: URL
+
+		///
+		/// Create a new instance of `Volume`.
+		///
+		init (release: Chapter.Release?, number: Int, page: URL, preview: URL)
+		{
+			self.release = release
+			self.number = number
+			self.page = page
+			self.preview = preview
+		}
+
+		///
+		/// `Page` objects are created before `Release` objects.
+		/// `assignRelease()` assigns a `Release` object once it
+		/// becomes available.
+		///
+		/// This function only assigns the release if none is set.
+		///
+		/// This function is automatically called by the `willSet`
+		/// handler for the `pages` property in `Release`.
+		/// There is no need to call it directly.
+		///
+		/// - Parameter release: The release the page belongs to.
+		///
+		fileprivate func assignRelease(_ release: Chapter.Release)
+		{
+			if self.release == nil {
+				self.release = release
+			}
+		}
 
 		///
 		/// String representation of `Release`.
@@ -207,10 +299,27 @@ public extension Chapter.Release
 		{
 			return """
 			Page(
-				page: \(page)
-				preview: \(preview)
+				number: '\(number)'
+				page: '\(page)'
+				preview: '\(preview)'
 			)
 			"""
+		}
+
+		///
+		/// Sort by `number`.
+		///
+		public static func < (lhs: Page, rhs: Page) -> Bool
+		{
+			return lhs.number < rhs.number
+		}
+
+		///
+		/// Equal if both are the same reference.
+		///
+		public static func == (lhs: Page, rhs: Page) -> Bool
+		{
+			return lhs === rhs
 		}
 	}
 
