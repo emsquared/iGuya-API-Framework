@@ -284,19 +284,21 @@ final class RequestBook : RequestJSON<Book>
 			throw Failure.dataMalformed
 		}
 
-		var pages: [URL] = []
-		var previews: [URL] = []
+		typealias Page = Chapter.Release.Page
+
+		var pages: [Page] = []
 
 		for file in files {
 			guard let links = Linkify.release(with: file, in: folder, by: groupRef, identifier: identifier) else {
 				throw Failure.dataMalformed
 			}
 
-			pages.append(links.page)
-			previews.append(links.preview)
+			let page = Page(page: links.page, preview: links.preview)
+
+			pages.append(page)
 		}
 
-		return Chapter.Release(group: groupRef, pages: pages, previews: previews)
+		return Chapter.Release(group: groupRef, pages: pages)
 	}
 
 	/**

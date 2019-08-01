@@ -57,58 +57,6 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	public fileprivate(set) var title: String
 
 	///
-	/// A chapter can have multiple releases.
-	/// Such as one from a JP -> KR -> EN group.
-	/// And one from a JP -> EN group.
-	/// `Release` represents a specific release.
-	///
-	public struct Release : Codable, Comparable, CustomStringConvertible {
-		///
-		/// The group that created the release.
-		///
-		public let group: Group
-
-		///
-		/// List of pages, in order, for the release.
-		///
-		public let pages: [URL]
-
-		///
-		/// List of previews, in order, for the release.
-		///
-		public let previews: [URL]
-
-		///
-		/// String representation of `Release`.
-		///
-		public var description: String
-		{
-			return """
-			Release(
-				group: \(group),
-				pages:
-					\(pages)
-				previews:
-					\(previews)
-			)
-			"""
-		}
-
-		///
-		/// Sort by `group`.
-		///
-		public static func < (lhs: Release, rhs: Release) -> Bool
-		{
-			return lhs.group < rhs.group
-		}
-	}
-
-	///
-	/// `Releases` is a collection of `Release`.
-	///
-	public typealias Releases = [Release]
-
-	///
 	/// All releases for the chapter.
 	///
 	public fileprivate(set) var releases: Releases
@@ -183,3 +131,91 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 /// `Chapters` is a collection of `Chapter`.
 ///
 public typealias Chapters = [Chapter]
+
+/* ------------------------------------------------------ */
+
+public extension Chapter
+{
+	///
+	/// A chapter can have multiple releases.
+	/// Such as one from a JP -> KR -> EN group.
+	/// And one from a JP -> EN group.
+	/// `Release` represents a specific release.
+	///
+	struct Release : Codable, Comparable, CustomStringConvertible
+	{
+		///
+		/// The group that created the release.
+		///
+		public let group: Group
+
+		///
+		/// List of pages, in order, for the release.
+		///
+		public let pages: Pages
+
+		///
+		/// String representation of `Release`.
+		///
+		public var description: String
+		{
+			return """
+			Release(
+				group: \(group),
+				pages:
+					\(pages)
+			)
+			"""
+		}
+
+		///
+		/// Sort by `group`.
+		///
+		public static func < (lhs: Release, rhs: Release) -> Bool
+		{
+			return lhs.group < rhs.group
+		}
+	}
+
+	///
+	/// `Releases` is a collection of `Release`.
+	///
+	typealias Releases = [Release]
+}
+
+public extension Chapter.Release
+{
+	///
+	/// `Page` represents a specific page in a release.
+	///
+	struct Page : Codable, CustomStringConvertible, Equatable
+	{
+		///
+		/// URL of full size image for the page.
+		///
+		public let page: URL
+
+		///
+		/// URL of scaled preview image for the page.
+		///
+		public let preview: URL
+
+		///
+		/// String representation of `Release`.
+		///
+		public var description: String
+		{
+			return """
+			Page(
+				pages: \(page)
+				preview: \(preview)
+			)
+			"""
+		}
+	}
+
+	///
+	/// `Pages` is a collection of `Page`.
+	///
+	typealias Pages = [Page]
+}
