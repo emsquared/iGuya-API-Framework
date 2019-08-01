@@ -74,6 +74,11 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 		public let pages: [URL]
 
 		///
+		/// List of previews, in order, for the release.
+		///
+		public let previews: [URL]
+
+		///
 		/// String representation of `Release`.
 		///
 		public var description: String
@@ -83,6 +88,8 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 				group: \(group),
 				pages:
 					\(pages)
+				previews:
+					\(previews)
 			)
 			"""
 		}

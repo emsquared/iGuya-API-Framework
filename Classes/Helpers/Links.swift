@@ -57,10 +57,19 @@ func linkify(cover file: String) -> URL?
 /// - Parameter group: The group responsible for the release.
 /// - Parameter identifier: Identifier for the book in which the page resides.
 ///
+/// - Returns: A tuple which contains the full size page as the first argument
+/// and the preview as the second argument.
+///
 @inlinable
-func linkify(release file: String, in folder: String, by group: Group, identifier: String) -> URL?
+func linkify(release file: String, in folder: String, by group: Group, identifier: String) -> (page: URL, preview: URL)?
 {
-	let link = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"
+	let page = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"
+	let preview = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)_shrunk/\(file)"
 
-	return URL(string: link)
+	guard 	let pageURL = URL(string: page),
+			let previewURL = URL(string: preview) else {
+			return nil
+	}
+
+	return (pageURL, previewURL)
 }

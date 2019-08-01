@@ -285,16 +285,18 @@ final class RequestBook : RequestJSON<Book>
 		}
 
 		var pages: [URL] = []
+		var previews: [URL] = []
 
 		for file in files {
-			guard let link = linkify(release: file, in: folder, by: groupRef, identifier: identifier) else {
+			guard let links = linkify(release: file, in: folder, by: groupRef, identifier: identifier) else {
 				throw Failure.dataMalformed
 			}
 
-			pages.append(link)
+			pages.append(links.page)
+			previews.append(links.preview)
 		}
 
-		return Chapter.Release(group: groupRef, pages: pages)
+		return Chapter.Release(group: groupRef, pages: pages, previews: previews)
 	}
 
 	/**
