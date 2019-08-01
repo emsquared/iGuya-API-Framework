@@ -76,4 +76,27 @@ struct Linkify
 
 		return (pageURL, previewURL)
 	}
+
+	///
+	/// Create URL of `page` in `chapter` for sharing.
+	///
+	/// - Parameter page: The page number.
+	/// - Parameter chapter: The chapter number.
+	/// - Parameter identifier: Identifier for the book in which the page resides.
+	///
+	@inlinable
+	static func share(page: Int, in chapter: String, identifier: String) -> URL?
+	{
+		let link: String
+
+		/* "Kaguya Wants To Be Confessed To" is the only book
+		 that guya.moe supports short URLs for. */
+		if (identifier == "Kaguya-Wants-To-Be-Confessed-To") {
+			link = "https://ka.guya.moe/\(chapter)/\(page)"
+		} else {
+			link = "https://guya.moe/reader/series/\(identifier)/\(chapter)/\(page)"
+		}
+
+		return URL(string: link)
+	}
 } // Links

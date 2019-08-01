@@ -271,6 +271,24 @@ public extension Chapter.Release
 		public fileprivate(set) var preview: URL
 
 		///
+		/// URL of the page onnline at guya.moe.
+		///
+		/// This property is computed on the fly which is why
+		/// it can return `nil`. It might not always have enough
+		/// context at the time it's called.
+		///
+		public var webpage: URL?
+		{
+			/* Now this is what you call chaining... */
+			guard 	let chapter = release?.chapter,
+					let identifier = chapter.volume?.book?.identifier else {
+				return nil
+			}
+
+			return Linkify.share(page: number, in: chapter.number, identifier: identifier)
+		}
+
+		///
 		/// Create a new instance of `Volume`.
 		///
 		init (release: Chapter.Release?, number: Int, page: URL, preview: URL)
