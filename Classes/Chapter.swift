@@ -207,7 +207,7 @@ public extension Chapter.Release
 		{
 			return """
 			Page(
-				pages: \(page)
+				page: \(page)
 				preview: \(preview)
 			)
 			"""
