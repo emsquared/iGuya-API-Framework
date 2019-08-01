@@ -110,7 +110,7 @@ final class RequestBook : RequestJSON<Book>
 
 		let cover 			= try string(named: "cover", in: data)
 
-		guard let coverURL = linkify(cover: cover) else {
+		guard let coverURL = Linkify.cover(with: cover) else {
 			throw Failure.dataMalformed
 		}
 
@@ -288,7 +288,7 @@ final class RequestBook : RequestJSON<Book>
 		var previews: [URL] = []
 
 		for file in files {
-			guard let links = linkify(release: file, in: folder, by: groupRef, identifier: identifier) else {
+			guard let links = Linkify.release(with: file, in: folder, by: groupRef, identifier: identifier) else {
 				throw Failure.dataMalformed
 			}
 

@@ -36,40 +36,44 @@
 
 import Foundation
 
-///
-/// Create URL of the image for a cover.
-///
-/// - Parameter file: Filename of the cover.
-///
-@inlinable
-func linkify(cover file: String) -> URL?
+struct Linkify
 {
-	let link = "https://ka.guya.moe\(file)"
+	///
+	/// Create URL of the image for a cover.
+	///
+	/// - Parameter file: Filename of the cover.
+	///
+	@inlinable
+	static func cover(with file: String) -> URL?
+	{
+		let link = "https://ka.guya.moe\(file)"
 
-	return URL(string: link)
-}
-
-///
-/// Create URL of the image for a page in a release.
-///
-/// - Parameter file: Filename of the page.
-/// - Parameter folder: Folder in which the page resides.
-/// - Parameter group: The group responsible for the release.
-/// - Parameter identifier: Identifier for the book in which the page resides.
-///
-/// - Returns: A tuple which contains the full size page as the first argument
-/// and the preview as the second argument.
-///
-@inlinable
-func linkify(release file: String, in folder: String, by group: Group, identifier: String) -> (page: URL, preview: URL)?
-{
-	let page = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"
-	let preview = "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)_shrunk/\(file)"
-
-	guard 	let pageURL = URL(string: page),
-			let previewURL = URL(string: preview) else {
-			return nil
+		return URL(string: link)
 	}
 
-	return (pageURL, previewURL)
-}
+	///
+	/// Create URL of the image for a page in a release.
+	///
+	/// - Parameter file: Filename of the page.
+	/// - Parameter folder: Folder in which the page resides.
+	/// - Parameter group: The group responsible for the release.
+	/// - Parameter identifier: Identifier for the book in which the page resides.
+	///
+	/// - Returns: A tuple which contains the full size page as the first argument
+	/// and the preview as the second argument.
+	///
+	@inlinable
+	static func release(with file: String, in folder: String, by group: Group, identifier: String) -> (page: URL, preview: URL)?
+	{
+		guard
+
+		let pageURL = URL(string: "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)/\(file)"),
+		let previewURL = URL(string: "https://ka.guya.moe/media/manga/\(identifier)/chapters/\(folder)/\(group.identifier)_shrunk/\(file)")
+
+		else {
+				return nil
+		}
+
+		return (pageURL, previewURL)
+	}
+} // Links
