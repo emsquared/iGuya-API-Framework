@@ -190,7 +190,7 @@ final class RequestBook : RequestJSON<Book>
 		var volumes: Volumes = []
 
 		for (volume, chapters) in chaptersByVolume {
-			let volumeRef = Volume(book: nil, number: volume, chapters: chapters)
+			let volumeRef = Volume(number: volume, chapters: chapters)
 
 			volumes.append(volumeRef)
 		}
@@ -221,7 +221,7 @@ final class RequestBook : RequestJSON<Book>
 
 		let releases = try processReleases(in: data)
 
-		return Chapter(volume: nil, number: number, title: title, releases: releases, folder: folder)
+		return Chapter(number: number, title: title, releases: releases, folder: folder)
 	}
 
 	/**
@@ -291,12 +291,12 @@ final class RequestBook : RequestJSON<Book>
 		for file in files {
 			let number = (pages.count + 1)
 
-			let page = Page(release: nil, number: number, file: file)
+			let page = Page(number: number, file: file)
 
 			pages.append(page)
 		}
 
-		return Chapter.Release(chapter: nil, group: groupRef, pages: pages)
+		return Chapter.Release(group: groupRef, pages: pages)
 	}
 
 	/**

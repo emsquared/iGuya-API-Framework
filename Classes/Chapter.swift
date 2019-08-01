@@ -69,7 +69,7 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (volume: Volume?, number: String, title: String, releases: Releases, folder: String)
+	init (volume: Volume? = nil, number: String, title: String, releases: Releases, folder: String)
 	{
 		self.volume = volume
 		self.number = number
@@ -175,7 +175,7 @@ public extension Chapter
 		///
 		/// Create a new instance of `Volume`.
 		///
-		init (chapter: Chapter?, group: Group, pages: Pages)
+		init (chapter: Chapter? = nil, group: Group, pages: Pages)
 		{
 			self.chapter = chapter
 			self.group = group
@@ -328,7 +328,7 @@ public extension Chapter.Release
 		///
 		/// Create a new instance of `Volume`.
 		///
-		init (release: Chapter.Release?, number: Int, file: String)
+		init (release: Chapter.Release? = nil, number: Int, file: String)
 		{
 			self.release = release
 			self.number = number

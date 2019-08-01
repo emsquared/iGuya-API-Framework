@@ -59,7 +59,7 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (book: Book?, number: String, chapters: Chapters)
+	init (book: Book? = nil, number: String, chapters: Chapters)
 	{
 		self.book = book
 		self.number = number
