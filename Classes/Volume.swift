@@ -73,8 +73,8 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	///
 	fileprivate func finalizeProperties()
 	{
-		chapters.sort(by: <)
 		chapters.forEach { $0.assignVolume(self) }
+		chapters.sort(by: <)
 	}
 
 	///

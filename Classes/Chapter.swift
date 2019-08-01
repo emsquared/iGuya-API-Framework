@@ -85,8 +85,8 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	fileprivate func finalizeProperties()
 	{
-		releases.sort(by: <)
 		releases.forEach { $0.assignChapter(self) }
+		releases.sort(by: <)
 	}
 
 	///
