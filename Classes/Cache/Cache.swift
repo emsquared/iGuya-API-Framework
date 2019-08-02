@@ -104,7 +104,7 @@ class Cache
 	func remove(book: Book)
 	{
 		cacheQueue.sync {
-			if let key = cache.firstIndex(where: { $1 == book }) {
+			if let key = cache.firstIndex(where: { $1 === book }) {
 				cache.remove(at: key)
 			}
 		}
