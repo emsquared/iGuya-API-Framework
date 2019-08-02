@@ -50,8 +50,22 @@ final class RequestBooks : RequestJSON<Books>
 		return "https://ka.guya.moe/api/get_all_series/"
 	}
 
+	///
+	/// Books which have been received.
+	///
 	fileprivate var books: Books = []
+
+	///
+	/// Dictionary of book requests mapped to book identifier.
+	///
 	fileprivate var bookRequests: [String : Request<Book>] = [:]
+
+	///
+	/// Dictionary of hashes mapped to book identifier.
+	///
+	/// This information is used to by caching service.
+	///
+	fileprivate var bookHashes: [String : Cache.Hash] = [:]
 
 	///
 	/// `Structures` defines the layout of objects in the JSON payload.
@@ -66,6 +80,9 @@ final class RequestBooks : RequestJSON<Books>
 	/// Called if one or more requests failed so that internal
 	/// state can be cleaned up. Requests are all or not so if
 	/// one fails then everything is discarded.
+	///
+	/// A reset does not remove any books that have already been
+	/// added to the cache.
 	///
 	fileprivate func reset()
 	{
@@ -118,10 +135,28 @@ final class RequestBooks : RequestJSON<Books>
 	{
 		let identifier = try string(named: "slug", in: book)
 
-		try createBookRequest(for: identifier)
+		let hash: Cache.Hash = try object(named: "series_data_hash", in: book)
+
+		/* Return book from the cache if it exists. */
+		if let cachedBook = Cache.shared.book(with: hash) {
+			os_log("Book '%{public}@' found in cache with hash '%{public}ld'.",
+				log: Logging.Subsystem.general, type: .debug, identifier, hash)
+
+			bookRequestFinalize(for: cachedBook, addToCache: false)
+
+			return
+		} else {
+			/* If this hash has no cached copy, then we have never
+			 seen it before, or it is a new version of the book. */
+			/* Remove any old copies of the book from the cache. */
+
+			Cache.shared.remove(book: identifier)
+		}
+
+		try createBookRequest(for: identifier, with: hash)
 	}
 
-	fileprivate func createBookRequest(for book: String) throws
+	fileprivate func createBookRequest(for book: String, with hash: Cache.Hash) throws
 	{
 		guard let request = RequestBook(book, { [weak self] (result) in
 			self?.bookRequestFinished(with: result)
@@ -133,6 +168,7 @@ final class RequestBooks : RequestJSON<Books>
 		}
 
 		bookRequests[book] = request
+		bookHashes[book] = hash
 	}
 
 	///
@@ -153,18 +189,24 @@ final class RequestBooks : RequestJSON<Books>
 		finalize(with: books)
 	}
 
+	///
+	/// Callback handler for book requests.
+	///
 	fileprivate func bookRequestFinished(with result: Result<Book, Failure>)
 	{
 		switch (result) {
 			case .failure(let error):
 				bookRequestFailed(with: error)
 			case .success(let book):
-				bookRequestCompleted(for: book)
+				bookRequestSucceeded(for: book)
 
 				startNextBookRequest()
 		}
 	}
 
+	///
+	/// Called when a book request fails.
+	///
 	fileprivate func bookRequestFailed(with error: Failure)
 	{
 		reset() // Reset internal state
@@ -172,10 +214,33 @@ final class RequestBooks : RequestJSON<Books>
 		finalize(with: error)
 	}
 
-	fileprivate func bookRequestCompleted(for book: Book)
+	///
+	/// Called when a book request succeeds.
+	///
+	fileprivate func bookRequestSucceeded(for book: Book)
 	{
 		bookRequests.removeValue(forKey: book.identifier)
 
+		bookRequestFinalize(for: book)
+	}
+
+	///
+	/// Called to finalize a book request.
+	///
+	/// This function may be called from outside a `Request` object
+	/// because `processBook()` will call it if a cached book is found.
+	///
+	/// - Parameter book: The book that was requested.
+	/// - Parameter addToCache: `true` to add book to cache. `false` otherwise.
+	///
+	fileprivate func bookRequestFinalize(for book: Book, addToCache: Bool = true)
+	{
 		books.append(book)
+
+		if let hash = bookHashes.removeValue(forKey: book.identifier) {
+			if (addToCache) {
+				Cache.shared.add(book: book, with: hash)
+			}
+		}
 	}
 }
