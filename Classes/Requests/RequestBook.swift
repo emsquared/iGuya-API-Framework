@@ -320,7 +320,7 @@ final class RequestBook : RequestJSON<Book>
 		for (identifier, name) in groups {
 			Group.createGroup(identifier: identifier, name: name)
 
-			os_log("Preloading group: (%{public}ld: '%{public}@')",
+			os_log("Preloading group: (%{public}@: '%{public}@')",
 				   log: Logging.Subsystem.general, type: .debug, identifier, name)
 		}
 	}
