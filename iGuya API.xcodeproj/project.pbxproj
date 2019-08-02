@@ -68,9 +68,10 @@
 		4C34082422E5761F0029654D = {
 			isa = PBXGroup;
 			children = (
+				4C34084022E576F00029654D /* Build */,
 				4C34084922E57A3E0029654D /* Classes */,
-				4CEA1BF022E6DA4D002EAF96 /* Playgrounds */,
 				4C34083D22E576BF0029654D /* Resources */,
+				4CEA1BF022E6DA4D002EAF96 /* Playgrounds */,
 				4C34082F22E5761F0029654D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,20 +87,18 @@
 		4C34083D22E576BF0029654D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4C34084022E576F00029654D /* Build Configurations */,
 				4C5FA13722E686F3000FA1FC /* Documentation */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		4C34084022E576F00029654D /* Build Configurations */ = {
+		4C34084022E576F00029654D /* Build */ = {
 			isa = PBXGroup;
 			children = (
-				4C34084422E577100029654D /* Foundation Debug.xcconfig */,
-				4C34084522E577100029654D /* Foundation.xcconfig */,
+				4C68AF2A22F3FCD100AA2401 /* Configurations */,
 				4C34084122E576F90029654D /* Properties */,
 			);
-			name = "Build Configurations";
+			name = Build;
 			sourceTree = "<group>";
 		};
 		4C34084122E576F90029654D /* Properties */ = {
@@ -130,6 +129,15 @@
 				4C5FA13822E6870E000FA1FC /* LICENSE.txt */,
 			);
 			name = Documentation;
+			sourceTree = "<group>";
+		};
+		4C68AF2A22F3FCD100AA2401 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4C34084422E577100029654D /* Foundation Debug.xcconfig */,
+				4C34084522E577100029654D /* Foundation.xcconfig */,
+			);
+			name = Configurations;
 			sourceTree = "<group>";
 		};
 		4C859DB422E6B4C900E85A29 /* Requests */ = {
