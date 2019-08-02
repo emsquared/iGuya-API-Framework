@@ -44,7 +44,6 @@
 		4C34084622E579810029654D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		4C5FA13822E6870E000FA1FC /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		4C68AF4E22F4128500AA2401 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		4CEA1BF122E6DA4D002EAF96 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +72,6 @@
 				4C34084022E576F00029654D /* Build */,
 				4C34084922E57A3E0029654D /* Classes */,
 				4C34083D22E576BF0029654D /* Resources */,
-				4CEA1BF022E6DA4D002EAF96 /* Playgrounds */,
 				4C34082F22E5761F0029654D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,14 +169,6 @@
 				4C02C5CF22F1213600BF879F /* String.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		4CEA1BF022E6DA4D002EAF96 /* Playgrounds */ = {
-			isa = PBXGroup;
-			children = (
-				4CEA1BF122E6DA4D002EAF96 /* MyPlayground.playground */,
-			);
-			path = Playgrounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
