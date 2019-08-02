@@ -192,7 +192,7 @@ final class RequestBooks : RequestJSON<Books>
 	///
 	/// Callback handler for book requests.
 	///
-	fileprivate func bookRequestFinished(with result: Result<Book, Failure>)
+	fileprivate func bookRequestFinished(with result: Request<Book>.CompletionResult)
 	{
 		switch (result) {
 			case .failure(let error):

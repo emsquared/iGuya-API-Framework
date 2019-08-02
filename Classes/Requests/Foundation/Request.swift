@@ -85,14 +85,23 @@ public class Request<ResultType>
 	public typealias Failure = Request<Any>._Failure
 
 	///
-	/// Completion handler that is called when the request finishes.
+	/// Result passed to the completion handler.
 	///
 	/// - Parameter data: The result of request.
 	/// - Parameter error: An error which describes why the request failed.
 	///
 	/// Both parameters will never be `nil` at the same time.
 	///
-	public typealias CompletionHandler = (Result<ResultType, Failure>) -> Void
+	public typealias CompletionResult = Result<ResultType, Failure>
+
+	///
+	/// Completion handler that is called when the request finishes.
+	///
+	/// - Parameter result: The result of request.
+	///
+	/// Both parameters will never be `nil` at the same time.
+	///
+	public typealias CompletionHandler = (CompletionResult) -> Void
 
 	fileprivate var completionHandler: CompletionHandler
 
