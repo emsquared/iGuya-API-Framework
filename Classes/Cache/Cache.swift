@@ -37,7 +37,7 @@
 import Dispatch
 
 ///
-/// Cache maintains a copy of `Book` objects in memory
+/// `Cache` maintains a copy of `Book` objects in memory
 /// and/or on disk to optimize loading.
 ///
 /// The API associates a unique integer with each book
