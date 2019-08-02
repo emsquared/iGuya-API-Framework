@@ -21,6 +21,7 @@
 		4C330EF722F21D8900FC1608 /* RequestBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C330EF622F21D8900FC1608 /* RequestBooks.swift */; };
 		4C34084722E579810029654D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C34084622E579810029654D /* Group.swift */; };
 		4C5FA13922E6870E000FA1FC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C5FA13822E6870E000FA1FC /* LICENSE.txt */; };
+		4C68AF4F22F4128500AA2401 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AF4E22F4128500AA2401 /* Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		4C34084522E577100029654D /* Foundation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Foundation.xcconfig; path = Configurations/Foundation.xcconfig; sourceTree = SOURCE_ROOT; };
 		4C34084622E579810029654D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		4C5FA13822E6870E000FA1FC /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
+		4C68AF4E22F4128500AA2401 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		4CEA1BF122E6DA4D002EAF96 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
@@ -96,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				4C68AF2A22F3FCD100AA2401 /* Configurations */,
-				4C34084122E576F90029654D /* Properties */,
 			);
 			name = Build;
 			sourceTree = "<group>";
@@ -107,11 +108,13 @@
 				4C34084222E577050029654D /* Info.plist */,
 			);
 			name = Properties;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		4C34084922E57A3E0029654D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4C68AF4D22F4127700AA2401 /* Cache */,
 				4CC74E2022E61C070084F3F4 /* Helpers */,
 				4C859DB422E6B4C900E85A29 /* Requests */,
 				4C02C5AA22F11F5800BF879F /* Book.swift */,
@@ -140,9 +143,18 @@
 			name = Configurations;
 			sourceTree = "<group>";
 		};
+		4C68AF4D22F4127700AA2401 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				4C68AF4E22F4128500AA2401 /* Cache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		4C859DB422E6B4C900E85A29 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				4C34084122E576F90029654D /* Properties */,
 				4C02C5C822F120D900BF879F /* Foundation */,
 				4C02C5CD22F1212000BF879F /* RequestBook.swift */,
 				4C330EF622F21D8900FC1608 /* RequestBooks.swift */,
@@ -249,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C68AF4F22F4128500AA2401 /* Cache.swift in Sources */,
 				4C02C5AD22F11F5800BF879F /* Book.swift in Sources */,
 				4C02C5CC22F120D900BF879F /* RequestJSON.swift in Sources */,
 				4C02C5B922F11FA600BF879F /* Logging.swift in Sources */,
