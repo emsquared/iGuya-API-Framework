@@ -39,27 +39,44 @@ import Foundation
 ///
 /// `Chapter` represents a specific chapter in `volume`
 ///
-final public class Chapter : Codable, Comparable, CustomStringConvertible
+final public class Chapter : NSObject, Codable, Comparable
 {
 	///
 	/// The volume the chapter belongs to.
 	///
+	@objc
 	public fileprivate(set) weak var volume: Volume?
 
 	///
 	/// Number of the chapter.
 	///
+	@objc
 	public fileprivate(set) var number: String
 
 	///
 	/// Title of the chapter.
 	///
+	@objc
 	public fileprivate(set) var title: String
 
 	///
 	/// All releases for the chapter.
 	///
+	@objc
 	public fileprivate(set) var releases: Releases
+
+	///
+	/// All groups that have a release for the chapter.
+	///
+	@objc
+	public var groups: Groups
+	{
+		var groups: Groups = []
+
+		releases.forEach { groups.append($0.group) }
+
+		return groups
+	}
 
 	///
 	/// The folder in which the pages are saved on guya.moe.
@@ -76,6 +93,8 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 		self.title = title
 		self.releases = releases
 		self.folder = folder
+
+		super.init()
 
 		finalizeProperties()
 	}
@@ -122,7 +141,7 @@ final public class Chapter : Codable, Comparable, CustomStringConvertible
 	///
 	/// String representation of `Chapter`.
 	///
-	public var description: String
+	override public var description: String
 	{
 		return """
 		Chapter(
@@ -166,21 +185,24 @@ public extension Chapter
 	/// And one from a JP -> EN group.
 	/// `Release` represents a specific release.
 	///
-	class Release : Codable, Comparable, CustomStringConvertible
+	class Release : NSObject, Codable, Comparable
 	{
 		///
 		/// The chapter the release belongs to.
 		///
+		@objc
 		public fileprivate(set) weak var chapter: Chapter?
 
 		///
 		/// The group that created the release.
 		///
+		@objc
 		public fileprivate(set) var group: Group
 
 		///
 		/// List of pages, in order, for the release.
 		///
+		@objc
 		public fileprivate(set) var pages: Pages
 
 		///
@@ -191,6 +213,8 @@ public extension Chapter
 			self.chapter = chapter
 			self.group = group
 			self.pages = pages
+
+			super.init()
 
 			finalizeProperties()
 		}
@@ -235,7 +259,7 @@ public extension Chapter
 		///
 		/// String representation of `Release`.
 		///
-		public var description: String
+		override public var description: String
 		{
 			return """
 			Release(
@@ -274,11 +298,15 @@ public extension Chapter.Release
 	///
 	/// `Page` represents a specific page in a release.
 	///
-	class Page : Codable, Comparable, CustomStringConvertible
+	@objc
+	class Page : NSObject, Codable, Comparable
 	{
 		///
 		/// The release the page belongs to.
 		///
+		/* Different name for Objective-C because it was having a
+		 conflict with a `release()` function in `Codable`. */
+		@objc(releaseRef)
 		public fileprivate(set) weak var release: Chapter.Release?
 
 		///
@@ -289,6 +317,7 @@ public extension Chapter.Release
 		///
 		/// The page number.
 		///
+		@objc
 		public fileprivate(set) var number: Int
 
 		///
@@ -298,6 +327,7 @@ public extension Chapter.Release
 		/// it can return `nil`. It might not always have enough
 		/// context at the time it's called.
 		///
+		@objc
 		public var page: URL?
 		{
 			/* Now this is what you call chaining... */
@@ -317,6 +347,7 @@ public extension Chapter.Release
 		/// it can return `nil`. It might not always have enough
 		/// context at the time it's called.
 		///
+		@objc
 		public var preview: URL?
 		{
 			/* Now this is what you call chaining... */
@@ -335,6 +366,7 @@ public extension Chapter.Release
 		/// it can return `nil`. It might not always have enough
 		/// context at the time it's called.
 		///
+		@objc
 		public var webpage: URL?
 		{
 			guard 	let chapter = release?.chapter,
@@ -362,6 +394,8 @@ public extension Chapter.Release
 			self.release = release
 			self.number = number
 			self.file = file
+
+			super.init()
 		}
 
 		///
@@ -386,7 +420,7 @@ public extension Chapter.Release
 		///
 		/// String representation of `Release`.
 		///
-		public var description: String
+		override public var description: String
 		{
 			return """
 			Page(

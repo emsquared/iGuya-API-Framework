@@ -40,7 +40,8 @@ import os.log
 ///
 /// `Book` represents a specific manga.
 ///
-final public class Book : Codable, Comparable, CustomStringConvertible
+@objc
+final public class Book : NSObject, Codable, Comparable
 {
 	///
 	/// The identifier used by the remote API
@@ -48,46 +49,62 @@ final public class Book : Codable, Comparable, CustomStringConvertible
 	///
 	/// This value is also known as the "slug"
 	///
+	@objc
 	public fileprivate(set) var identifier: String
 
 	///
 	/// Title of the book.
 	///
+	@objc
 	public fileprivate(set) var title: String
 
 	///
 	/// Author of the book.
 	///
+	@objc
 	public fileprivate(set) var author: String
 
 	///
 	/// Artist of the book.
 	///
+	@objc
 	public fileprivate(set) var artist: String
 
 	///
 	/// Description of the book.
 	///
+	@objc
 	public fileprivate(set) var summary: String
 
 	///
 	/// Cover image of the book.
 	///
+	@objc
 	public fileprivate(set) var cover: URL
 
 	///
 	/// All volumes for the book.
 	///
-	/// Even for chapters that are part of an unfinished
-	/// volume, they are still stored within a `Volume`.
-	/// The `Volume` for ongoing chapters have a nil `number`.
-	///
+	@objc
 	public fileprivate(set) var volumes: Volumes
+
+	///
+	/// All chapters for the book.
+	///
+	@objc
+	public var chapters: Chapters
+	{
+		var chapters: Chapters = []
+
+		volumes.forEach { chapters.append(contentsOf: $0.chapters) }
+
+		return chapters
+	}
 
 	///
 	/// String representation of `Book`.
 	///
-	public var description: String
+	override public var description: String
 	{
 		return """
 		Book(
@@ -115,6 +132,8 @@ final public class Book : Codable, Comparable, CustomStringConvertible
 		summary 		= try assignOrThrow(mutableBook.summary)
 		cover 			= try assignOrThrow(mutableBook.cover)
 		volumes 		= try assignOrThrow(mutableBook.volumes)
+
+		super.init()
 
 		finalizeProperties()
 	}

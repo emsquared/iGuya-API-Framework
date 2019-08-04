@@ -40,17 +40,20 @@ import Dispatch
 ///
 /// `Group` represents a specific scanlator group.
 ///
-final public class Group : Codable, Comparable, CustomStringConvertible
+@objc
+final public class Group : NSObject, Codable, Comparable
 {
 	///
 	/// The identifier used by the remote API
 	/// to identify this group.
 	///
+	@objc
 	public fileprivate(set) var identifier: String
 
 	///
 	/// Name of the group.
 	///
+	@objc
 	public fileprivate(set) var name: String
 
 	///
@@ -108,7 +111,7 @@ final public class Group : Codable, Comparable, CustomStringConvertible
 	///
 	/// String representation of `Group`.
 	///
-	public var description: String
+	override public var description: String
 	{
 		return "Group('\(identifier)': '\(name)')"
 	}

@@ -34,26 +34,32 @@
  *
  *********************************************************************** */
 
+import Foundation
+
 ///
 /// `Volume` represents a specific volume in `book`
 ///
-final public class Volume : Codable, Comparable, CustomStringConvertible
+@objc
+final public class Volume : NSObject, Codable, Comparable
 {
 	///
 	/// The book the volume belongs to.
 	///
 	/// This is a weak reference.
 	///
+	@objc
 	public fileprivate(set) weak var book: Book?
 
 	///
 	/// The volume number.
 	///
+	@objc
 	public fileprivate(set) var number: String
 
 	///
 	/// Chapters the volume contains.
 	///
+	@objc
 	public fileprivate(set) var chapters: Chapters
 
 	///
@@ -64,6 +70,8 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 		self.book = book
 		self.number = number
 		self.chapters = chapters
+
+		super.init()
 
 		finalizeProperties()
 	}
@@ -108,7 +116,7 @@ final public class Volume : Codable, Comparable, CustomStringConvertible
 	///
 	/// String representation of `Volume`.
 	///
-	public var description: String
+	override public var description: String
 	{
 		return """
 		Volume(
