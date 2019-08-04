@@ -54,7 +54,7 @@ final public class Volume : NSObject, Codable, Comparable
 	/// The volume number.
 	///
 	@objc
-	public fileprivate(set) var number: String
+	public fileprivate(set) var number: Int
 
 	///
 	/// Chapters the volume contains.
@@ -65,7 +65,7 @@ final public class Volume : NSObject, Codable, Comparable
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (book: Book? = nil, number: String, chapters: Chapters)
+	init (book: Book? = nil, number: Int, chapters: Chapters)
 	{
 		self.book = book
 		self.number = number
@@ -132,7 +132,7 @@ final public class Volume : NSObject, Codable, Comparable
 	///
 	public static func < (lhs: Volume, rhs: Volume) -> Bool
 	{
-		return lhs.number.compareAsDouble(rhs.number, <)
+		return lhs.number < rhs.number
 	}
 
 	///

@@ -51,7 +51,7 @@ final public class Chapter : NSObject, Codable, Comparable
 	/// Number of the chapter.
 	///
 	@objc
-	public fileprivate(set) var number: String
+	public fileprivate(set) var number: Double
 
 	///
 	/// Title of the chapter.
@@ -86,7 +86,7 @@ final public class Chapter : NSObject, Codable, Comparable
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (volume: Volume? = nil, number: String, title: String, releases: Releases, folder: String)
+	init (volume: Volume? = nil, number: Double, title: String, releases: Releases, folder: String)
 	{
 		self.volume = volume
 		self.number = number
@@ -158,7 +158,7 @@ final public class Chapter : NSObject, Codable, Comparable
 	///
 	public static func < (lhs: Chapter, rhs: Chapter) -> Bool
 	{
-		return lhs.number.compareAsDouble(rhs.number, <)
+		return lhs.number < rhs.number
 	}
 
 	///
@@ -174,6 +174,28 @@ final public class Chapter : NSObject, Codable, Comparable
 /// `Chapters` is a collection of `Chapter`.
 ///
 public typealias Chapters = [Chapter]
+
+/* ------------------------------------------------------ */
+
+public extension Chapter
+{
+	///
+	/// Number of the chapter formatted.
+	///
+	@objc
+	var numberFormatted: String
+	{
+		let formatter = NumberFormatter()
+
+		formatter.minimumFractionDigits = 0
+		formatter.maximumFractionDigits = 2
+
+		formatter.numberStyle = .decimal
+
+		return formatter.string(for: number)!
+	}
+
+}
 
 /* ------------------------------------------------------ */
 
@@ -374,7 +396,7 @@ public extension Chapter.Release
 				return nil
 			}
 
-			return Linkify.share(page: number, in: chapter.number, identifier: identifier)
+			return Linkify.share(page: number, in: chapter.numberFormatted, identifier: identifier)
 		}
 
 		///

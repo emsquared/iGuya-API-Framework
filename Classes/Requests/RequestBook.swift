@@ -165,9 +165,13 @@ final class RequestBook : RequestJSON<Book>
 		var chaptersByVolume: [String : Chapters] = [:]
 
 		for (chapter, details) in chapters {
+			guard let chapterNumber = Double(chapter) else {
+				throw Failure.dataMalformed
+			}
+
 			let volume = try string(named: "volume", in: details)
 
-			let chapter = try processChapter(chapter, in: details)
+			let chapter = try processChapter(chapterNumber, in: details)
 
 			/* Am I doing this right? */
 			/* In Objective-C, I could store a mutable store and assign
@@ -190,7 +194,11 @@ final class RequestBook : RequestJSON<Book>
 		var volumes: Volumes = []
 
 		for (volume, chapters) in chaptersByVolume {
-			let volumeRef = Volume(number: volume, chapters: chapters)
+			guard let volumeNumber = Int(volume) else {
+				throw Failure.dataMalformed
+			}
+
+			let volumeRef = Volume(number: volumeNumber, chapters: chapters)
 
 			volumes.append(volumeRef)
 		}
@@ -213,7 +221,7 @@ final class RequestBook : RequestJSON<Book>
 			...
 		```
 	*/
-	fileprivate func processChapter(_ number: String, in data: Structures.Chapter) throws -> Chapter
+	fileprivate func processChapter(_ number: Double, in data: Structures.Chapter) throws -> Chapter
 	{
 		let title =	try string(named: "title", in: data)
 

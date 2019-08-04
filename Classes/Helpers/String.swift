@@ -43,17 +43,6 @@ extension String
 	}
 
 	@inlinable
-	func compareAsDouble(_ other: String, _ comparator: (Double, Double) -> Bool) -> Bool
-	{
-		guard	let value1 = Double(self),
-				let value2 = Double(other) else {
-				return false
-		}
-
-		return comparator(value1, value2)
-	}
-
-	@inlinable
 	var isBookIdentifier: Bool
 	{
 		return matches(#"^([\w-]+)$"#)
