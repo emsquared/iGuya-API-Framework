@@ -162,7 +162,7 @@ final class RequestBook : RequestJSON<Book>
 		/* Chapters are first divided up into a dictionary whose
 		 key is the volume number and value is array of chapters
 		 in that volume. */
-		var chaptersByVolume: [String : Chapters] = [:]
+		var chaptersByVolume: [Int : Chapters] = [:]
 
 		for (chapter, details) in chapters {
 			guard let chapterNumber = Double(chapter) else {
@@ -170,6 +170,10 @@ final class RequestBook : RequestJSON<Book>
 			}
 
 			let volume = try string(named: "volume", in: details)
+
+			guard let volumeNumber = Int(volume) else {
+				throw Failure.dataMalformed
+			}
 
 			let chapter = try processChapter(chapterNumber, in: details)
 
@@ -180,12 +184,12 @@ final class RequestBook : RequestJSON<Book>
 			 dictionary so I have to reassign it every time. */
 			/* Maybe there is a more correct way of doing this that
 			 I simply don't know of yet. */
-			if var container = chaptersByVolume[volume] {
+			if var container = chaptersByVolume[volumeNumber] {
 				container.append(chapter)
 
-				chaptersByVolume[volume] = container
+				chaptersByVolume[volumeNumber] = container
 			} else {
-				chaptersByVolume[volume] = [chapter]
+				chaptersByVolume[volumeNumber] = [chapter]
 			}
 		}
 
@@ -194,11 +198,7 @@ final class RequestBook : RequestJSON<Book>
 		var volumes: Volumes = []
 
 		for (volume, chapters) in chaptersByVolume {
-			guard let volumeNumber = Int(volume) else {
-				throw Failure.dataMalformed
-			}
-
-			let volumeRef = Volume(number: volumeNumber, chapters: chapters)
+			let volumeRef = Volume(number: volume, chapters: chapters)
 
 			volumes.append(volumeRef)
 		}
