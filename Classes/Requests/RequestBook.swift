@@ -286,7 +286,7 @@ final class RequestBook : RequestJSON<Book>
 	fileprivate func processRelease(files: Structures.Release, by group: String) throws -> Chapter.Release
 	{
 		guard let groupRef = Group.group(with: group) else {
-			os_log("Group '%{public}ld' has a release but isn't identified.",
+			os_log("Group '%{public}@' has a release but isn't identified.",
 				   log: Logging.Subsystem.general, type: .fault, group)
 
 			throw Failure.dataMalformed
@@ -327,9 +327,6 @@ final class RequestBook : RequestJSON<Book>
 
 		for (identifier, name) in groups {
 			Group.createGroup(identifier: identifier, name: name)
-
-			os_log("Preloading group: (%{public}@: '%{public}@')",
-				   log: Logging.Subsystem.general, type: .debug, identifier, name)
 		}
 	}
 }

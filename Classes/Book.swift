@@ -254,7 +254,7 @@ public extension Book
 
 			return true
 		} catch let error {
-			os_log("Writing failed with error: %@",
+			os_log("Writing failed with error: '%{public}@'.",
 				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
 			return false
@@ -299,7 +299,7 @@ public extension Book
 
 			return data
 		} catch let error {
-			os_log("Encoding failed with error: %@",
+			os_log("Encoding failed with error: '%{public}@'.",
 				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
 			return nil
@@ -339,7 +339,7 @@ public extension Book
 
 			return data
 		} catch let error {
-			os_log("Encoding failed with error: %@",
+			os_log("Encoding failed with error: '%{public}@'.",
 				   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
 			return nil

@@ -161,7 +161,7 @@ final class RequestBooks : RequestJSON<Books>
 		guard let request = RequestBook(book, { [weak self] (result) in
 			self?.bookRequestFinished(with: result)
 		}) else {
-			os_log("Failed to create request for book '%@'",
+			os_log("Failed to create request for book '%{public}@'.",
 				   log: Logging.Subsystem.general, type: .fault, book)
 
 			throw Failure.otherError()

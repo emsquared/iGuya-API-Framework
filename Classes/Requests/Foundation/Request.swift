@@ -162,6 +162,9 @@ public class Request<ResultType>
 
 		taskRef?.resume()
 
+		os_log("Resuming task: '%{public}@'.",
+			   log: Logging.Subsystem.general, type: .debug, taskRef!)
+
 		return true
 	}
 
@@ -180,6 +183,9 @@ public class Request<ResultType>
 
 		taskRef?.cancel()
 
+		os_log("Cancelled task: '%{public}@'.",
+			   log: Logging.Subsystem.general, type: .debug, taskRef!)
+
 		return true
 	}
 
@@ -193,16 +199,25 @@ public class Request<ResultType>
 			return nil
 		}
 
+		os_log("Preparing to perform request to: '%{public}@'.",
+			   log: Logging.Subsystem.general, type: .debug, location)
+
 		let session = URLSession.shared
 
 		let sessionTask = session.dataTask(with: locationURL) { [weak self] (data, response, error) in
 			if let error = error {
+				os_log("Loading request at '%{public}@' failed with error: '%{public}@'.",
+					   log: Logging.Subsystem.general, type: .error, location, error.localizedDescription)
+
 				self?.finalize(with: .sessionError(error))
 
 				return
 			}
 
 			guard let response = response as? HTTPURLResponse else {
+				os_log("Loading request at '%{public}@' failed because response is not HTTP.",
+					   log: Logging.Subsystem.general, type: .error, location)
+
 				self?.finalize(with: .responseNotHTTP)
 
 				return
@@ -211,6 +226,9 @@ public class Request<ResultType>
 			let statusCode = response.statusCode
 
 			guard statusCode == 200 else {
+				os_log("Loading request at '%{public}@' failed because Not-OK status code: %{public}ld.",
+					   log: Logging.Subsystem.general, type: .error, location, statusCode)
+
 				self?.finalize(with: .responseNotOK(statusCode: statusCode))
 
 				return
@@ -219,12 +237,18 @@ public class Request<ResultType>
 			/* data should never be nil because we already checked if error is. */
 			/* I have this check because I want to be sane as possible. */
 			guard let data = data else {
+				os_log("Loading request at '%{public}@' failed because data is malformed.",
+					   log: Logging.Subsystem.general, type: .error, location)
+
 				self?.finalize(with: .dataMalformed)
 
 				return
 			}
 
 			do {
+				os_log("Request at '%{public}@' completed.",
+					   log: Logging.Subsystem.general, type: .debug, location)
+
 				try self?.taskCompleted(with: data)
 
 			/* Catch errors from our own framework. */
@@ -233,12 +257,15 @@ public class Request<ResultType>
 
 			/* Catch all other errors. */
 			} catch let error {
-				os_log("Unusual error caught: %@",
+				os_log("Unusual error caught: '%@'.",
 					   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
 				self?.finalize(with: .otherError(error))
 			}
 		} // sessionTask
+
+		os_log("Queued request to load '%{public}@' as task '%{public}@'.",
+			   log: Logging.Subsystem.general, type: .debug, location, sessionTask)
 
 		return sessionTask
 	}
@@ -256,7 +283,7 @@ public class Request<ResultType>
 	///
 	final func finalize(with error: Failure)
 	{
-		os_log("Request failed with error: %{public}@",
+		os_log("Request failed with error: '%{public}@'.",
 			   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
 		completionHandler(.failure(error))

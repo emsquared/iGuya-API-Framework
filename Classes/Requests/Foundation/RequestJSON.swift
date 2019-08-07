@@ -68,7 +68,7 @@ class RequestJSON<RequestType> : Request<RequestType>
 		do {
 			jsonObject = try JSONSerialization.jsonObject(with: data)
 		} catch let decodeError {
-			os_log("Decode failed with error: %@",
+			os_log("Decode failed with error: '%{public}@'.",
 				   log: Logging.Subsystem.general, type: .error, decodeError.localizedDescription)
 
 			finalize(with: .otherError(decodeError))
@@ -77,6 +77,9 @@ class RequestJSON<RequestType> : Request<RequestType>
 		}
 
 		guard let json = jsonObject as? JSONData else {
+			os_log("Decoding failed because data is malformed.",
+				   log: Logging.Subsystem.general, type: .error)
+
 			finalize(with: .dataMalformed)
 
 			return
@@ -100,7 +103,7 @@ class RequestJSON<RequestType> : Request<RequestType>
 			return value
 		}
 
-		os_log("'%@' is missing or in incorrect format.",
+		os_log("'%{public}@' is missing or is malformed.",
 			   log: Logging.Subsystem.general, type: .fault, named)
 
 		throw Failure.dataMalformed
