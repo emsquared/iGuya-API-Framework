@@ -40,7 +40,7 @@ import Foundation
 /// `Volume` represents a specific volume in `book`
 ///
 @objc
-final public class Volume : NSObject, Codable, Comparable
+final public class Volume: NSObject, Codable, Comparable
 {
 	///
 	/// The book the volume belongs to.

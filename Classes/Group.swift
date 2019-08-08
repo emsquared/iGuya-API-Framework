@@ -41,7 +41,7 @@ import Dispatch
 /// `Group` represents a specific scanlator group.
 ///
 @objc
-final public class Group : NSObject, Codable, Comparable
+final public class Group: NSObject, Codable, Comparable
 {
 	///
 	/// The identifier used by the remote API

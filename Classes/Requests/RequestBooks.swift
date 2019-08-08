@@ -43,7 +43,7 @@ import os.log
 /// If one book fails to download, then that is considered a failure
 /// and anything already downloaded and requests pending are discarded.
 ///
-final class RequestBooks : RequestJSON<Books>
+final class RequestBooks: RequestJSON<Books>
 {
 	override var taskLocation: String?
 	{

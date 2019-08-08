@@ -41,7 +41,7 @@ import os.log
 /// `Book` represents a specific manga.
 ///
 @objc
-final public class Book : NSObject, Codable, Comparable
+final public class Book: NSObject, Codable, Comparable
 {
 	///
 	/// The identifier used by the remote API

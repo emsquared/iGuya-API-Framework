@@ -39,7 +39,7 @@ import Foundation
 ///
 /// `Chapter` represents a specific chapter in `volume`
 ///
-final public class Chapter : NSObject, Codable, Comparable
+final public class Chapter: NSObject, Codable, Comparable
 {
 	///
 	/// The volume the chapter belongs to.
@@ -207,7 +207,7 @@ public extension Chapter
 	/// And one from a JP -> EN group.
 	/// `Release` represents a specific release.
 	///
-	class Release : NSObject, Codable, Comparable
+	class Release: NSObject, Codable, Comparable
 	{
 		///
 		/// The chapter the release belongs to.
@@ -321,7 +321,7 @@ public extension Chapter.Release
 	/// `Page` represents a specific page in a release.
 	///
 	@objc
-	class Page : NSObject, Codable, Comparable
+	class Page: NSObject, Codable, Comparable
 	{
 		///
 		/// The release the page belongs to.

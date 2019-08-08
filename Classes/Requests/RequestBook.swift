@@ -37,7 +37,7 @@
 import Foundation
 import os.log
 
-final class RequestBook : RequestJSON<Book>
+final class RequestBook: RequestJSON<Book>
 {
 	override var taskLocation: String?
 	{
