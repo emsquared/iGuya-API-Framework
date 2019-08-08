@@ -43,12 +43,12 @@ import os.log
 ///
 /// - SeeAlso: Request
 ///
-class RequestJSON<RequestType> : Request<RequestType>
+class RequestJSON<RequestType>: Request<RequestType>
 {
 	///
 	/// Structure of data returned by `RequestJSON`.
 	///
-	typealias JSONData = [String : Any]
+	typealias JSONData = [String: Any]
 
 	///
 	/// Called if decoding the JSON data succeeds.

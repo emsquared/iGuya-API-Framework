@@ -62,11 +62,11 @@ final class RequestBook: RequestJSON<Book>
 	///
 	fileprivate struct Structures
 	{
-		typealias Groups = [String : String]
-		typealias Chapter = [String : Any]
-		typealias Chapters = [String : Chapter]
+		typealias Groups = [String: String]
+		typealias Chapter = [String: Any]
+		typealias Chapters = [String: Chapter]
 		typealias Release = [String]
-		typealias Releases = [String : Release]
+		typealias Releases = [String: Release]
 	}
 
 	///
@@ -162,7 +162,7 @@ final class RequestBook: RequestJSON<Book>
 		/* Chapters are first divided up into a dictionary whose
 		 key is the volume number and value is array of chapters
 		 in that volume. */
-		var chaptersByVolume: [Int : Chapters] = [:]
+		var chaptersByVolume: [Int: Chapters] = [:]
 
 		for (chapter, details) in chapters {
 			guard let chapterNumber = Double(chapter) else {

@@ -49,7 +49,7 @@ public class Request<ResultType>
 	///
 	/// Errors thrown by `Request`.
 	///
-	public enum _Failure : Error
+	public enum _Failure: Error
 	{
 		///
 		/// Data received from endpoint is in a form which

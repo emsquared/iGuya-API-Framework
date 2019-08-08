@@ -58,22 +58,22 @@ final class RequestBooks: RequestJSON<Books>
 	///
 	/// Dictionary of book requests mapped to book identifier.
 	///
-	fileprivate var bookRequests: [String : Request<Book>] = [:]
+	fileprivate var bookRequests: [String: Request<Book>] = [:]
 
 	///
 	/// Dictionary of hashes mapped to book identifier.
 	///
 	/// This information is used to by caching service.
 	///
-	fileprivate var bookHashes: [String : Cache.Hash] = [:]
+	fileprivate var bookHashes: [String: Cache.Hash] = [:]
 
 	///
 	/// `Structures` defines the layout of objects in the JSON payload.
 	///
 	fileprivate struct Structures
 	{
-		typealias Book = [String : Any]
-		typealias Books = [String : Book]
+		typealias Book = [String: Any]
+		typealias Books = [String: Book]
 	}
 
 	///

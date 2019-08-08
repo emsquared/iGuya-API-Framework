@@ -74,7 +74,7 @@ final public class Group: NSObject, Codable, Comparable
 	//
 	// In reality this may be an over optimization.
 	//
-	fileprivate static var sharedGroups:[String : Group] = [:]
+	fileprivate static var sharedGroups: [String: Group] = [:]
 
 	fileprivate static let sharedGroupsQueue =
 		DispatchQueue(label: "SharedGroupsQueue")

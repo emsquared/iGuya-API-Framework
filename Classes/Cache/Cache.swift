@@ -58,7 +58,7 @@ class Cache
 	///
 	/// Dictionary of books mapped to hashes.
 	///
-	fileprivate var cache: [Hash : Book] = [:]
+	fileprivate var cache: [Hash: Book] = [:]
 
 	///
 	/// Dispatch queue to perform access to `cache` on to
@@ -140,4 +140,3 @@ class Cache
 		return book
 	}
 }
-

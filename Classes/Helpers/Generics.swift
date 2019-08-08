@@ -37,7 +37,7 @@
 ///
 /// Errors thrown by `assignOrThrow()`.
 ///
-enum MutabilityError : Error
+enum MutabilityError: Error
 {
 	///
 	/// Thrown when trying to assign a nil value to
