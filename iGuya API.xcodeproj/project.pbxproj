@@ -38,12 +38,12 @@
 		4C330EF422F21D7200FC1608 /* Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		4C330EF622F21D8900FC1608 /* RequestBooks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBooks.swift; sourceTree = "<group>"; };
 		4C34082E22E5761F0029654D /* iGuyaAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iGuyaAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C34084222E577050029654D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C34084422E577100029654D /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Foundation Debug.xcconfig"; path = "Configurations/Foundation Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C34084522E577100029654D /* Foundation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Foundation.xcconfig; path = Configurations/Foundation.xcconfig; sourceTree = SOURCE_ROOT; };
 		4C34084622E579810029654D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		4C5FA13822E6870E000FA1FC /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = SOURCE_ROOT; };
 		4C68AF4E22F4128500AA2401 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		4CAB50AB22FEBAC900128AA5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				4C68AF2A22F3FCD100AA2401 /* Configurations */,
+				4C34084122E576F90029654D /* Properties */,
 			);
 			name = Build;
 			sourceTree = "<group>";
@@ -103,10 +104,9 @@
 		4C34084122E576F90029654D /* Properties */ = {
 			isa = PBXGroup;
 			children = (
-				4C34084222E577050029654D /* Info.plist */,
+				4CAB50AB22FEBAC900128AA5 /* Info.plist */,
 			);
 			name = Properties;
-			path = ../..;
 			sourceTree = "<group>";
 		};
 		4C34084922E57A3E0029654D /* Classes */ = {
@@ -152,7 +152,6 @@
 		4C859DB422E6B4C900E85A29 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				4C34084122E576F90029654D /* Properties */,
 				4C02C5C822F120D900BF879F /* Foundation */,
 				4C02C5CD22F1212000BF879F /* RequestBook.swift */,
 				4C330EF622F21D8900FC1608 /* RequestBooks.swift */,
