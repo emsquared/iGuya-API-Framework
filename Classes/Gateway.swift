@@ -34,7 +34,7 @@
  *
  *********************************************************************** */
 
-public class Gateway
+final public class Gateway
 {
 	public static func getBook(_ named: String, _ completionHandler: @escaping Request<Book>.CompletionHandler) -> Request<Book>?
 	{
