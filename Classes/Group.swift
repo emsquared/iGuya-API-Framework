@@ -97,7 +97,7 @@ final public class Group: NSObject, Codable, Comparable
 		return group!
 	}
 
-	static func group(with identifier: String) -> Group?
+	static public func group(with identifier: String) -> Group?
 	{
 		var group: Group?
 
