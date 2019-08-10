@@ -97,6 +97,12 @@ final public class Group: NSObject, Codable, Comparable
 		return group!
 	}
 
+	///
+	/// Group identified by`identifier`.
+	///
+	/// `Group` objects are created after first book is downloaded
+	/// which means this function will return `nil` until then.
+	///
 	static public func group(with identifier: String) -> Group?
 	{
 		var group: Group?
