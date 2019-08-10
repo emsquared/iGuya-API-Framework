@@ -150,7 +150,7 @@ final public class Book: NSObject, Codable, Comparable
 	///
 	/// Sort by `title`.
 	///
-	public static func < (lhs: Book, rhs: Book) -> Bool
+	static public func < (lhs: Book, rhs: Book) -> Bool
 	{
 		return lhs.title < rhs.title
 	}
@@ -158,7 +158,7 @@ final public class Book: NSObject, Codable, Comparable
 	///
 	/// Equal if both are the same reference.
 	///
-	public static func == (lhs: Book, rhs: Book) -> Bool
+	static public func == (lhs: Book, rhs: Book) -> Bool
 	{
 		return lhs === rhs
 	}

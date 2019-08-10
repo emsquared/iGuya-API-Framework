@@ -130,7 +130,7 @@ final public class Volume: NSObject, Codable, Comparable
 	///
 	/// Sort by `number`.
 	///
-	public static func < (lhs: Volume, rhs: Volume) -> Bool
+	static public func < (lhs: Volume, rhs: Volume) -> Bool
 	{
 		return lhs.number < rhs.number
 	}
@@ -138,7 +138,7 @@ final public class Volume: NSObject, Codable, Comparable
 	///
 	/// Equal if both are the same reference.
 	///
-	public static func == (lhs: Volume, rhs: Volume) -> Bool
+	static public func == (lhs: Volume, rhs: Volume) -> Bool
 	{
 		return lhs === rhs
 	}

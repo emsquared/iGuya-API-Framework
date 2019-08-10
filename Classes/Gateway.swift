@@ -36,14 +36,14 @@
 
 final public class Gateway
 {
-	public static func getBook(_ named: String, _ completionHandler: @escaping Request<Book>.CompletionHandler) -> Request<Book>?
+	static public func getBook(_ named: String, _ completionHandler: @escaping Request<Book>.CompletionHandler) -> Request<Book>?
 	{
 		let request = RequestBook(named, completionHandler)
 
 		return request
 	}
 
-	public static func getBooks(_ completionHandler: @escaping Request<Books>.CompletionHandler) -> Request<Books>
+	static public func getBooks(_ completionHandler: @escaping Request<Books>.CompletionHandler) -> Request<Books>
 	{
 		let request = RequestBooks(with: completionHandler)
 

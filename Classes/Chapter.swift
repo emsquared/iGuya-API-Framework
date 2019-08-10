@@ -156,7 +156,7 @@ final public class Chapter: NSObject, Codable, Comparable
 	///
 	/// Sort by `number`.
 	///
-	public static func < (lhs: Chapter, rhs: Chapter) -> Bool
+	static public func < (lhs: Chapter, rhs: Chapter) -> Bool
 	{
 		return lhs.number < rhs.number
 	}
@@ -164,7 +164,7 @@ final public class Chapter: NSObject, Codable, Comparable
 	///
 	/// Equal if both are the same reference.
 	///
-	public static func == (lhs: Chapter, rhs: Chapter) -> Bool
+	static public func == (lhs: Chapter, rhs: Chapter) -> Bool
 	{
 		return lhs === rhs
 	}
@@ -295,7 +295,7 @@ public extension Chapter
 		///
 		/// Sort by `group`.
 		///
-		public static func < (lhs: Release, rhs: Release) -> Bool
+		static public func < (lhs: Release, rhs: Release) -> Bool
 		{
 			return lhs.group < rhs.group
 		}
@@ -303,7 +303,7 @@ public extension Chapter
 		///
 		/// Equal if both are the same reference.
 		///
-		public static func == (lhs: Release, rhs: Release) -> Bool
+		static public func == (lhs: Release, rhs: Release) -> Bool
 		{
 			return lhs === rhs
 		}
@@ -456,7 +456,7 @@ public extension Chapter.Release
 		///
 		/// Sort by `number`.
 		///
-		public static func < (lhs: Page, rhs: Page) -> Bool
+		static public func < (lhs: Page, rhs: Page) -> Bool
 		{
 			return lhs.number < rhs.number
 		}
@@ -464,7 +464,7 @@ public extension Chapter.Release
 		///
 		/// Equal if both are the same reference.
 		///
-		public static func == (lhs: Page, rhs: Page) -> Bool
+		static public func == (lhs: Page, rhs: Page) -> Bool
 		{
 			return lhs === rhs
 		}

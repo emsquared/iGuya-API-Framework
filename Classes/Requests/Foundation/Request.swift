@@ -145,7 +145,8 @@ public class Request<ResultType>
 	///
 	/// - Returns: `true` on success. `false` otherwise.
 	///
-	@discardableResult public final func start() -> Bool
+	@discardableResult
+	final public func start() -> Bool
 	{
 		var taskRef = task
 
@@ -173,7 +174,8 @@ public class Request<ResultType>
 	///
 	/// - Returns: `true` on success. `false` otherwise.
 	///
-	@discardableResult public final func cancel() -> Bool
+	@discardableResult
+	final public func cancel() -> Bool
 	{
 		let taskRef = task
 

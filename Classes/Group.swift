@@ -119,7 +119,7 @@ final public class Group: NSObject, Codable, Comparable
 	///
 	/// Sort by `name`.
 	///
-	public static func < (lhs: Group, rhs: Group) -> Bool
+	static public func < (lhs: Group, rhs: Group) -> Bool
 	{
 		return lhs.name < rhs.name
 	}
@@ -127,7 +127,7 @@ final public class Group: NSObject, Codable, Comparable
 	///
 	/// Equal if both are the same reference.
 	///
-	public static func == (lhs: Group, rhs: Group) -> Bool
+	static public func == (lhs: Group, rhs: Group) -> Bool
 	{
 		return lhs === rhs
 	}
