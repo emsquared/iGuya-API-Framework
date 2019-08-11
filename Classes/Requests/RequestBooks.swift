@@ -139,9 +139,6 @@ final class RequestBooks: RequestJSON<Books>
 
 		/* Return book from the cache if it exists. */
 		if let cachedBook = Cache.shared.book(with: hash) {
-			os_log("Book '%{public}@' found in cache with hash '%{public}ld'.",
-				log: Logging.Subsystem.general, type: .debug, identifier, hash)
-
 			bookRequestFinalize(for: cachedBook, addToCache: false)
 
 			return
@@ -162,7 +159,7 @@ final class RequestBooks: RequestJSON<Books>
 			self?.bookRequestFinished(with: result)
 		}) else {
 			os_log("Failed to create request for book '%{public}@'.",
-				   log: Logging.Subsystem.general, type: .fault, book)
+				   log: Logging.Subsystem.general, type: .error, book)
 
 			throw Failure.otherError()
 		}

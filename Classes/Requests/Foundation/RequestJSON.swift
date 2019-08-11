@@ -104,7 +104,7 @@ class RequestJSON<RequestType>: Request<RequestType>
 		}
 
 		os_log("'%{public}@' is missing or is malformed.",
-			   log: Logging.Subsystem.general, type: .fault, named)
+			   log: Logging.Subsystem.general, type: .error, named)
 
 		throw Failure.dataMalformed
 	}

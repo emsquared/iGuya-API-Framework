@@ -287,7 +287,7 @@ final class RequestBook: RequestJSON<Book>
 	{
 		guard let groupRef = Group.group(with: group) else {
 			os_log("Group '%{public}@' has a release but isn't identified.",
-				   log: Logging.Subsystem.general, type: .fault, group)
+				   log: Logging.Subsystem.general, type: .error, group)
 
 			throw Failure.dataMalformed
 		}

@@ -163,9 +163,6 @@ public class Request<ResultType>
 
 		taskRef?.resume()
 
-		os_log("Resuming task: '%{public}@'.",
-			   log: Logging.Subsystem.general, type: .debug, taskRef!)
-
 		return true
 	}
 
@@ -185,9 +182,6 @@ public class Request<ResultType>
 
 		taskRef?.cancel()
 
-		os_log("Cancelled task: '%{public}@'.",
-			   log: Logging.Subsystem.general, type: .debug, taskRef!)
-
 		return true
 	}
 
@@ -200,9 +194,6 @@ public class Request<ResultType>
 				let locationURL = URL(string: location) else {
 			return nil
 		}
-
-		os_log("Preparing to perform request to: '%{public}@'.",
-			   log: Logging.Subsystem.general, type: .debug, location)
 
 		let session = URLSession.shared
 
@@ -248,9 +239,6 @@ public class Request<ResultType>
 			}
 
 			do {
-				os_log("Request at '%{public}@' completed.",
-					   log: Logging.Subsystem.general, type: .debug, location)
-
 				try self?.taskCompleted(with: data)
 
 			/* Catch errors from our own framework. */
@@ -265,9 +253,6 @@ public class Request<ResultType>
 				self?.finalize(with: .otherError(error))
 			}
 		} // sessionTask
-
-		os_log("Queued request to load '%{public}@' as task '%{public}@'.",
-			   log: Logging.Subsystem.general, type: .debug, location, sessionTask)
 
 		return sessionTask
 	}
