@@ -259,7 +259,7 @@ public class Request<ResultType>
 
 			/* Catch all other errors. */
 			} catch let error {
-				os_log("Unusual error caught: '%@'.",
+				os_log("Unusual error caught: '%{public}@'.",
 					   log: Logging.Subsystem.general, type: .error, error.localizedDescription)
 
 				self?.finalize(with: .otherError(error))
