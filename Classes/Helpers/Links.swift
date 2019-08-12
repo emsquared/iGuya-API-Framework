@@ -100,7 +100,7 @@ struct Linkify
 		if (identifier == "Kaguya-Wants-To-Be-Confessed-To") {
 			link = "https://ka.guya.moe/\(chapter)/\(page)"
 		} else {
-			link = "https://guya.moe/reader/series/\(identifier)/\(chapter)/\(page)"
+			link = "https://ka.guya.moe/reader/series/\(identifier)/\(chapter)/\(page)"
 		}
 
 		return URL(string: link)
