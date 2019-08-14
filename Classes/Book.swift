@@ -92,14 +92,14 @@ final public class Book: NSObject, Codable, Comparable
 	/// All chapters for the book.
 	///
 	@objc
-	public var chapters: Chapters
+	lazy public var chapters: Chapters =
 	{
 		var chapters: Chapters = []
 
 		volumes.forEach { chapters.append(contentsOf: $0.chapters) }
 
 		return chapters
-	}
+	}()
 
 	///
 	/// String representation of `Book`.
