@@ -85,11 +85,17 @@ final public class Book: NSObject, Codable, Comparable
 	///
 	/// All volumes for the book.
 	///
+	/// The order of this collection is stable.
+	/// It is sorted by ascending volume number. 
+	///
 	@objc
 	public fileprivate(set) var volumes: Volumes
 
 	///
 	/// All chapters for the book.
+	///
+	/// The order of this collection is stable.
+	/// It is sorted by ascending chapter number.
 	///
 	@objc
 	lazy public var chapters: Chapters =

@@ -59,6 +59,9 @@ final public class Volume: NSObject, Codable, Comparable
 	///
 	/// Chapters the volume contains.
 	///
+	/// The order of this collection is stable.
+	/// It is sorted by ascending chapter number.
+	///
 	@objc
 	public fileprivate(set) var chapters: Chapters
 

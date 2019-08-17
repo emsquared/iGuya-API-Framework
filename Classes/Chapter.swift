@@ -224,6 +224,9 @@ public extension Chapter
 		///
 		/// List of pages, in order, for the release.
 		///
+		/// The order of this collection is stable.
+		/// It is sorted by ascending page number.
+		///
 		@objc
 		public fileprivate(set) var pages: Pages
 
