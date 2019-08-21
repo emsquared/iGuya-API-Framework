@@ -110,10 +110,6 @@ final class RequestBook: RequestJSON<Book>
 
 		let cover 			= try string(named: "cover", in: data)
 
-		guard let coverURL = Linkify.cover(with: cover) else {
-			throw Failure.dataMalformed
-		}
-
 		/* Parse volumes */
 		let volumes 		= try processVolumes(in: data)
 
@@ -125,7 +121,7 @@ final class RequestBook: RequestJSON<Book>
 		book.author = author
 		book.artist = artist
 		book.summary = description
-		book.cover = coverURL
+		book.cover = cover
 		book.volumes = volumes
 
 		return try book.copy()
@@ -254,11 +250,11 @@ final class RequestBook: RequestJSON<Book>
 				...
 		```
 	*/
-	fileprivate func processReleases(in data: JSONData) throws -> Chapter.Releases
+	fileprivate func processReleases(in data: JSONData) throws -> Releases
 	{
 		let releases: Structures.Releases = try object(named: "groups", in: data)
 
-		var releasesOut: Chapter.Releases = []
+		var releasesOut: Releases = []
 
 		for (group, files) in releases {
 			let release = try processRelease(files: files, by: group)
@@ -283,7 +279,7 @@ final class RequestBook: RequestJSON<Book>
 			...
 		```
 	*/
-	fileprivate func processRelease(files: Structures.Release, by group: String) throws -> Chapter.Release
+	fileprivate func processRelease(files: Structures.Release, by group: String) throws -> Release
 	{
 		guard let groupRef = Group.group(with: group) else {
 			os_log("Group '%{public}@' has a release but isn't identified.",
@@ -291,8 +287,6 @@ final class RequestBook: RequestJSON<Book>
 
 			throw Failure.dataMalformed
 		}
-
-		typealias Page = Chapter.Release.Page
 
 		var pages: [Page] = []
 
@@ -304,7 +298,7 @@ final class RequestBook: RequestJSON<Book>
 			pages.append(page)
 		}
 
-		return Chapter.Release(group: groupRef, pages: pages)
+		return Release(group: groupRef, pages: pages)
 	}
 
 	/**

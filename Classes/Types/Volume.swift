@@ -35,103 +35,111 @@
  *********************************************************************** */
 
 import Foundation
-import Dispatch
 
 ///
-/// `Group` represents a specific scanlator group.
+/// `Volume` represents a specific volume in `book`
 ///
 @objc
-final public class Group: NSObject, Codable, Comparable, EquatableByReference
+final public class Volume: NSObject, Codable, Comparable, EquatableByReference
 {
 	///
-	/// The identifier used by the remote API
-	/// to identify this group.
+	/// The book the volume belongs to.
+	///
+	/// This is a weak reference.
 	///
 	@objc
-	public fileprivate(set) var identifier: String
+	public fileprivate(set) weak var book: Book?
 
 	///
-	/// Name of the group.
+	/// The volume number.
 	///
 	@objc
-	public fileprivate(set) var name: String
+	public fileprivate(set) var number: Int
 
 	///
-	/// Create a new instance of `Group`.
+	/// Chapters the volume contains.
 	///
-	init (identifier: String, name: String)
+	/// The order of this collection is stable.
+	/// It is sorted by ascending chapter number.
+	///
+	@objc
+	public fileprivate(set) var chapters: Chapters
+
+	///
+	/// Create a new instance of `Volume`.
+	///
+	init (book: Book? = nil, number: Int, chapters: Chapters)
 	{
-		self.identifier = identifier
-		self.name = name
+		self.book = book
+		self.number = number
+		self.chapters = chapters
+
+		super.init()
+
+		finalizeProperties()
 	}
 
-	//
-	// Groups are consistent across the entire guya platform which means
-	// we can use a factory to always return the same Group object.
-	//
-	// A dispatch queue is used in the factory to guarantee that the object
-	// store is always accessed synchronously preventing race conditions.
-	//
-	// In reality this may be an over optimization.
-	//
-	fileprivate static var sharedGroups: [String: Group] = [:]
-
-	fileprivate static let sharedGroupsQueue =
-		DispatchQueue(label: "SharedGroupsQueue")
-
-	@discardableResult
-	static func createGroup(identifier: String, name: String) -> Group
+	///
+	/// Perform last second cleanup of properties during `init()`.
+	///
+	fileprivate func finalizeProperties()
 	{
-		var group: Group?
+		assignToChildren()
 
-		sharedGroupsQueue.sync {
-			group = sharedGroups[identifier]
+		chapters.sort(by: <)
+	}
 
-			if (group == nil) {
-				group = Group(identifier: identifier, name: name)
+	///
+	/// Override coding keys to prevent loops caused by parent references.
+	///
+    private enum CodingKeys: String, CodingKey
+	{
+        case number
+        case chapters
+    }
 
-				sharedGroups[identifier] = group!
-			}
+	///
+	/// Assign reference to children objects.
+	///
+	func assignToChildren()
+	{
+		chapters.forEach { $0.assignParent(self) }
+	}
+
+	///
+	/// Assign reference to parent object.
+	///
+	func assignParent(_ parent: Book)
+	{
+		if book == nil {
+			book = parent
 		}
-
-		return group!
 	}
 
 	///
-	/// Group identified by`identifier`.
-	///
-	/// `Group` objects are created after first book is downloaded
-	/// which means this function will return `nil` until then.
-	///
-	static public func group(with identifier: String) -> Group?
-	{
-		var group: Group?
-
-		sharedGroupsQueue.sync {
-			group = sharedGroups[identifier]
-		}
-
-		return group
-	}
-
-	///
-	/// String representation of `Group`.
+	/// String representation of `Volume`.
 	///
 	override public var description: String
 	{
-		return "Group('\(identifier)': '\(name)')"
+		return """
+		Volume(
+			number: '\(number)',
+			chapters:
+				\(chapters)
+		)
+		"""
 	}
 
 	///
-	/// Sort by `name`.
+	/// Sort by `number`.
 	///
-	static public func < (lhs: Group, rhs: Group) -> Bool
+	static public func < (lhs: Volume, rhs: Volume) -> Bool
 	{
-		return lhs.name < rhs.name
+		return lhs.number < rhs.number
 	}
 }
 
 ///
-/// `Groups` is a collection of `Group`.
+/// `Volumes` is a collection of `Volume`.
 ///
-public typealias Groups = [Group]
+public typealias Volumes = [Volume]

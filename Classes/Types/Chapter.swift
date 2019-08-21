@@ -37,42 +37,63 @@
 import Foundation
 
 ///
-/// `Volume` represents a specific volume in `book`
+/// `Chapter` represents a specific chapter in `volume`
 ///
-@objc
-final public class Volume: NSObject, Codable, Comparable
+final public class Chapter: NSObject, Codable, Comparable, EquatableByReference
 {
 	///
-	/// The book the volume belongs to.
-	///
-	/// This is a weak reference.
+	/// The volume the chapter belongs to.
 	///
 	@objc
-	public fileprivate(set) weak var book: Book?
+	public fileprivate(set) weak var volume: Volume?
 
 	///
-	/// The volume number.
+	/// Number of the chapter.
 	///
 	@objc
-	public fileprivate(set) var number: Int
+	public fileprivate(set) var number: Double
 
 	///
-	/// Chapters the volume contains.
-	///
-	/// The order of this collection is stable.
-	/// It is sorted by ascending chapter number.
+	/// Title of the chapter.
 	///
 	@objc
-	public fileprivate(set) var chapters: Chapters
+	public fileprivate(set) var title: String
+
+	///
+	/// All releases for the chapter.
+	///
+	@objc
+	public fileprivate(set) var releases: Releases
+
+	///
+	/// All groups that have a release for the chapter.
+	///
+	@objc
+	lazy public var groups: Groups =
+	{
+		var groups: Groups = []
+
+		releases.forEach { groups.append($0.group) }
+
+		return groups
+	}()
+
+	///
+	/// The folder in which the pages are saved.
+	///
+	@objc
+	public fileprivate(set) var folder: String
 
 	///
 	/// Create a new instance of `Volume`.
 	///
-	init (book: Book? = nil, number: Int, chapters: Chapters)
+	init (volume: Volume? = nil, number: Double, title: String, releases: Releases, folder: String)
 	{
-		self.book = book
+		self.volume = volume
 		self.number = number
-		self.chapters = chapters
+		self.title = title
+		self.releases = releases
+		self.folder = folder
 
 		super.init()
 
@@ -84,48 +105,51 @@ final public class Volume: NSObject, Codable, Comparable
 	///
 	fileprivate func finalizeProperties()
 	{
-		chapters.forEach { $0.assignVolume(self) }
-		chapters.sort(by: <)
+		assignToChildren()
+
+		releases.sort(by: <)
 	}
 
 	///
 	/// Override coding keys to prevent loops caused by parent references.
 	///
-    private enum CodingKeys: String, CodingKey
+	private enum CodingKeys: String, CodingKey
 	{
-        case number
-        case chapters
-    }
+		case number
+		case title
+		case releases
+		case folder
+	}
 
 	///
-	/// `Volume` objects are created before `Book` objects.
-	/// `assignBook()` assigns a `Book` object once it
-	/// becomes available.
+	/// Assign reference to children objects.
 	///
-	/// This function only assigns the book if none is set.
-	///
-	/// This function is automatically called.
-	/// There is no need to call it directly.
-	///
-	/// - Parameter book: The book the volume belongs to.
-	///
-	func assignBook(_ book: Book)
+	func assignToChildren()
 	{
-		if self.book == nil {
-			self.book = book
+		releases.forEach { $0.assignParent(self) }
+	}
+
+	///
+	/// Assign reference to parent object.
+	///
+	func assignParent(_ parent: Volume)
+	{
+		if volume == nil {
+			volume = parent
 		}
 	}
 
 	///
-	/// String representation of `Volume`.
+	/// String representation of `Chapter`.
 	///
 	override public var description: String
 	{
 		return """
-		Volume(
+		Chapter(
 			number: '\(number)',
-			chapters:
-				\(chapters)
+			title: '\(title)',
+			releases:
+				\(releases)
 		)
 		"""
 	}
@@ -133,21 +157,13 @@ final public class Volume: NSObject, Codable, Comparable
 	///
 	/// Sort by `number`.
 	///
-	static public func < (lhs: Volume, rhs: Volume) -> Bool
+	static public func < (lhs: Chapter, rhs: Chapter) -> Bool
 	{
 		return lhs.number < rhs.number
-	}
-
-	///
-	/// Equal if both are the same reference.
-	///
-	static public func == (lhs: Volume, rhs: Volume) -> Bool
-	{
-		return lhs === rhs
 	}
 }
 
 ///
-/// `Volumes` is a collection of `Volume`.
+/// `Chapters` is a collection of `Chapter`.
 ///
-public typealias Volumes = [Volume]
+public typealias Chapters = [Chapter]
