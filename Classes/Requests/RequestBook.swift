@@ -79,7 +79,7 @@ final class RequestBook: RequestJSON<Book>
 			/* Return book from the cache if it exists. */
 			if let cachedBook = Cache.shared.book(with: cacheIdentifier) {
 				os_log("Cache hit for book with identifier: '%{public}@'; Hash: '%{public}@'.",
-					   log: Logging.Subsystem.general, type: .error, identifier, cacheIdentifier)
+					   log: Logging.Subsystem.general, type: .debug, identifier, cacheIdentifier)
 
 				finalize(with: cachedBook)
 
