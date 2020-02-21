@@ -74,6 +74,26 @@ final class RequestBook: RequestJSON<Book>
 	///
 	override func taskCompleted(with data: JSONData) throws
 	{
+		/* Check cache */
+		if let cacheIdentifier = cacheIdentifier {
+			/* Return book from the cache if it exists. */
+			if let cachedBook = Cache.shared.book(with: cacheIdentifier) {
+				os_log("Cache hit for book with identifier: '%{public}@'; Hash: '%{public}@'.",
+					   log: Logging.Subsystem.general, type: .error, identifier, cacheIdentifier)
+
+				finalize(with: cachedBook)
+
+				return
+			} else {
+				/* If this hash has no cached copy, then we have never
+				 seen it before, or it is a new version of the book. */
+				/* Remove any old copies of the book from the cache. */
+
+				Cache.shared.remove(book: identifier)
+			}
+		}
+
+		/* Cache miss */
 		let book = try processBook(in: data)
 
 		finalize(with: book)

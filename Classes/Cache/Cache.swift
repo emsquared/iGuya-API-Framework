@@ -40,7 +40,7 @@ import Dispatch
 /// `Cache` maintains a copy of `Book` objects in memory
 /// and/or on disk to optimize loading.
 ///
-/// The API associates a unique integer with each book
+/// The API associates a unique string with each book
 /// that changes when the contents of the book do.
 ///
 /// `Cache` uses this unique integer (the "hash") as
@@ -50,10 +50,10 @@ import Dispatch
 class Cache
 {
 	///
-	/// Integer which is used to uniquely identify
+	/// String which is used to uniquely identify
 	/// a specific version of a book.
 	///
-	typealias Hash = Int
+	typealias Hash = String
 
 	///
 	/// Dictionary of books mapped to hashes.

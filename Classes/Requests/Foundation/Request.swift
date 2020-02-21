@@ -105,6 +105,13 @@ public class Request<ResultType>
 
 	fileprivate var completionHandler: CompletionHandler
 
+
+	///
+	/// Value of the "Etag" HTTP header which is often used by
+	/// servers for caching purposes.
+	///
+	public fileprivate(set) var cacheIdentifier: String?
+
 	///
 	/// Designated initializer for `Request`.
 	///
@@ -236,6 +243,12 @@ public class Request<ResultType>
 				self?.finalize(with: .dataMalformed)
 
 				return
+			}
+
+			/* Wait until we are certain whether we have a successful payload
+			 to save the cache identifier so that it only appears for those. */
+			if let etag = response.allHeaderFields["Etag"] as? String {
+				self?.cacheIdentifier = etag
 			}
 
 			do {

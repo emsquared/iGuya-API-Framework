@@ -61,13 +61,6 @@ final class RequestBooks: RequestJSON<Books>
 	fileprivate var bookRequests: [String: Request<Book>] = [:]
 
 	///
-	/// Dictionary of hashes mapped to book identifier.
-	///
-	/// This information is used to by caching service.
-	///
-	fileprivate var bookHashes: [String: Cache.Hash] = [:]
-
-	///
 	/// `Structures` defines the layout of objects in the JSON payload.
 	///
 	fileprivate struct Structures
@@ -135,25 +128,10 @@ final class RequestBooks: RequestJSON<Books>
 	{
 		let identifier = try string(named: "slug", in: book)
 
-		let hash: Cache.Hash = try object(named: "series_data_hash", in: book)
-
-		/* Return book from the cache if it exists. */
-		if let cachedBook = Cache.shared.book(with: hash) {
-			bookRequestFinalize(for: cachedBook, addToCache: false)
-
-			return
-		} else {
-			/* If this hash has no cached copy, then we have never
-			 seen it before, or it is a new version of the book. */
-			/* Remove any old copies of the book from the cache. */
-
-			Cache.shared.remove(book: identifier)
-		}
-
-		try createBookRequest(for: identifier, with: hash)
+		try createBookRequest(for: identifier)
 	}
 
-	fileprivate func createBookRequest(for book: String, with hash: Cache.Hash) throws
+	fileprivate func createBookRequest(for book: String) throws
 	{
 		guard let request = RequestBook(book, { [weak self] (result) in
 			self?.bookRequestFinished(with: result)
@@ -165,7 +143,6 @@ final class RequestBooks: RequestJSON<Books>
 		}
 
 		bookRequests[book] = request
-		bookHashes[book] = hash
 	}
 
 	///
@@ -233,11 +210,5 @@ final class RequestBooks: RequestJSON<Books>
 	fileprivate func bookRequestFinalize(for book: Book, addToCache: Bool = true)
 	{
 		books.append(book)
-
-		if let hash = bookHashes.removeValue(forKey: book.identifier) {
-			if (addToCache) {
-				Cache.shared.add(book: book, with: hash)
-			}
-		}
 	}
 }
